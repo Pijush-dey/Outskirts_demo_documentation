@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Outskirts Hospitality Suite — Admin Workflow Manual</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B3E;
+    --green: #10B981;
+    --green-light: #D1FAE5;
+    --amber: #F59E0B;
+    --red: #EF4444;
+    --bg: #F1F5F9;
+    --surface: #fff;
+    --border: #E2E8F0;
+    --text2: #475569;
+    --text3: #94A3B8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: var(--navy); font-size: 14px; line-height: 1.6; }
+
+  /* ── COVER ── */
+  .cover {
+    background: linear-gradient(135deg, #0D1B3E 0%, #1e3a5f 60%, #10B981 100%);
+    color: #fff;
+    padding: 80px 60px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(16,185,129,0.18) 0%, transparent 60%);
+  }
+  .cover-logo {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 48px; position: relative;
+  }
+  .cover-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+  }
+  .cover-brand { font-family: 'Manrope', sans-serif; font-size: 22px; font-weight: 800; }
+  .cover-brand span { display: block; font-size: 11px; font-weight: 400; opacity: .5; letter-spacing: .18em; text-transform: uppercase; margin-top: 2px; }
+  .cover-title { font-family: 'Manrope', sans-serif; font-size: 48px; font-weight: 800; line-height: 1.15; position: relative; margin-bottom: 20px; }
+  .cover-title em { color: #34D399; font-style: normal; }
+  .cover-sub { font-size: 17px; opacity: .7; max-width: 520px; position: relative; margin-bottom: 48px; }
+  .cover-pills { display: flex; gap: 10px; flex-wrap: wrap; position: relative; }
+  .cover-pill {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+    padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 500;
+  }
+  .cover-version { margin-top: 40px; font-size: 11px; opacity: .4; position: relative; }
+
+  /* ── PAGE LAYOUT ── */
+  .page { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── TOC ── */
+  .toc-section {
+    background: #fff; border-bottom: 1px solid var(--border);
+    padding: 48px 0;
+  }
+  .toc-inner { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  .toc-title { font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--text3); margin-bottom: 24px; }
+  .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .toc-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; border-radius: 10px;
+    border: 1px solid var(--border);
+    text-decoration: none; color: var(--navy);
+    transition: all .15s;
+  }
+  .toc-item:hover { background: var(--bg); border-color: var(--green); }
+  .toc-num {
+    width: 26px; height: 26px; border-radius: 8px;
+    background: var(--bg); border: 1px solid var(--border);
+    font-size: 11px; font-weight: 700; color: var(--text3);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .toc-label { font-size: 13px; font-weight: 500; }
+  .toc-desc { font-size: 11px; color: var(--text3); margin-top: 1px; }
+
+  /* ── SECTIONS ── */
+  .doc-section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .doc-section:last-child { border-bottom: none; }
+
+  .section-header { margin-bottom: 32px; }
+  .section-eyebrow {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2);
+    color: var(--green); padding: 4px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-title-lg {
+    font-family: 'Manrope', sans-serif; font-size: 32px; font-weight: 800; color: var(--navy); margin-bottom: 10px;
+  }
+  .section-desc { font-size: 15px; color: var(--text2); max-width: 640px; line-height: 1.7; }
+
+  /* ── SCREEN MOCKUP ── */
+  .mockup-container { margin: 28px 0; }
+  .mockup-label {
+    font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text3); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .mockup-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .mockup {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 16px;
+    overflow: hidden; box-shadow: 0 8px 32px rgba(13,27,62,0.1);
+  }
+  .mockup-bar {
+    background: #fff; border-bottom: 1px solid var(--border);
+    padding: 12px 20px; display: flex; align-items: center; gap: 8px;
+  }
+  .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .mockup-url {
+    flex: 1; background: var(--bg); border-radius: 6px; padding: 4px 12px;
+    font-size: 11px; color: var(--text3); margin: 0 12px;
+  }
+  .mockup-body { display: flex; min-height: 320px; }
+  .mockup-sidebar {
+    width: 180px; background: linear-gradient(180deg, #0D1B3E, #0a1628);
+    flex-shrink: 0; padding: 16px 0;
+  }
+  .ms-logo { padding: 0 14px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 8px; }
+  .ms-logo-name { font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 800; color: #F8FAFC; }
+  .ms-logo-sub { font-size: 8px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .ms-section { padding: 10px 14px 3px; font-size: 8px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,0.22); }
+  .ms-item {
+    display: flex; align-items: center; gap: 8px; padding: 7px 14px;
+    font-size: 11px; color: rgba(255,255,255,0.5); border-left: 2px solid transparent;
+    cursor: pointer;
+  }
+  .ms-item.active { color: #fff; background: rgba(16,185,129,0.18); border-left-color: #10B981; }
+  .ms-badge { margin-left: auto; background: #10B981; color: #fff; font-size: 8px; padding: 1px 6px; border-radius: 8px; font-weight: 700; }
+  .mockup-content { flex: 1; padding: 18px; overflow: hidden; }
+
+  /* ── CALLOUT / ANNOTATION ── */
+  .annotation-group { position: relative; }
+  .annotations { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+  .ann {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: #fff; border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 14px; box-shadow: 0 1px 4px rgba(13,27,62,0.06);
+  }
+  .ann-num {
+    width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #fff;
+  }
+  .ann-num.green { background: var(--green); }
+  .ann-num.navy { background: var(--navy); }
+  .ann-num.amber { background: var(--amber); }
+  .ann-num.red { background: var(--red); }
+  .ann-content { flex: 1; }
+  .ann-title { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 2px; }
+  .ann-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+  /* ── WORKFLOW STEPS ── */
+  .workflow { display: flex; flex-direction: column; gap: 0; margin: 28px 0; }
+  .wf-step {
+    display: flex; gap: 20px; padding-bottom: 28px; position: relative;
+  }
+  .wf-step:last-child { padding-bottom: 0; }
+  .wf-step:last-child .wf-line { display: none; }
+  .wf-left { display: flex; flex-direction: column; align-items: center; width: 44px; flex-shrink: 0; }
+  .wf-circle {
+    width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Manrope', sans-serif; font-size: 16px; font-weight: 800; color: #fff;
+    background: var(--green); box-shadow: 0 4px 14px rgba(16,185,129,0.3); z-index: 1;
+  }
+  .wf-circle.navy { background: var(--navy); box-shadow: 0 4px 14px rgba(13,27,62,0.25); }
+  .wf-circle.amber { background: var(--amber); box-shadow: 0 4px 14px rgba(245,158,11,0.3); }
+  .wf-line { width: 2px; background: var(--border); flex: 1; margin-top: 6px; }
+  .wf-body { flex: 1; padding-top: 10px; }
+  .wf-title { font-family: 'Manrope', sans-serif; font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .wf-desc { font-size: 14px; color: var(--text2); line-height: 1.65; margin-bottom: 10px; }
+  .wf-tip {
+    background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 8px; padding: 10px 14px;
+    font-size: 12px; color: #065F46; line-height: 1.55;
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .wf-warn {
+    background: #FFFBEB; border: 1px solid #FDE68A;
+    border-radius: 8px; padding: 10px 14px;
+    font-size: 12px; color: #92400E; line-height: 1.55;
+    display: flex; align-items: flex-start; gap: 8px;
+    margin-top: 8px;
+  }
+
+  /* ── INFO BOX ── */
+  .infobox {
+    background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 10px;
+    padding: 14px 18px; margin: 20px 0; font-size: 13px; color: #1E40AF; line-height: 1.6;
+  }
+  .infobox strong { font-weight: 600; }
+
+  /* ── UI ELEMENT REPLICAS ── */
+  .ui-card {
+    background: #fff; border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px; box-shadow: 0 1px 4px rgba(13,27,62,0.05);
+    margin-bottom: 10px;
+  }
+  .ui-card-title { font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+
+  .kpi-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 14px; }
+  .kpi-box {
+    background: #fff; border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px; position: relative; overflow: hidden;
+  }
+  .kpi-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .kpi-box.k1::before { background: linear-gradient(90deg, #10B981, #34D399); }
+  .kpi-box.k2::before { background: linear-gradient(90deg, #0D1B3E, #475569); }
+  .kpi-box.k3::before { background: linear-gradient(90deg, #475569, #10B981); }
+  .kpi-box.k4::before { background: linear-gradient(90deg, #34D399, #6EE7B7); }
+  .kpi-lbl { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--text3); margin-bottom: 6px; font-weight: 500; }
+  .kpi-val { font-family: 'Manrope', sans-serif; font-size: 24px; font-weight: 800; color: var(--navy); }
+  .kpi-sub { font-size: 10px; color: var(--text3); margin-top: 4px; }
+
+  .pill { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 10px; font-weight: 600; }
+  .pill-g { background: rgba(16,185,129,0.1); color: #059669; border: 1px solid rgba(16,185,129,0.25); }
+  .pill-a { background: #FFFBEB; color: #D97706; border: 1px solid #FDE68A; }
+  .pill-r { background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; }
+  .pill-b { background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; }
+
+  .room-grid-mini { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin: 12px 0; }
+  .rt {
+    border-radius: 8px; padding: 8px 6px; text-align: center; font-family: 'Manrope', sans-serif;
+    font-size: 15px; font-weight: 800; border: 2px solid transparent;
+  }
+  .rt-av { background: #fff; border-color: #10B981; color: #0D1B3E; }
+  .rt-oc { background: #1B2A47; border-color: #1B2A47; color: #fff; }
+  .rt-re { background: #F59E0B; border-color: #F59E0B; color: #fff; }
+  .rt-mn { background: #D92B2B; border-color: #D92B2B; color: #fff; }
+  .rt-sub { font-size: 7px; font-family: 'Inter', sans-serif; margin-top: 1px; opacity: .7; }
+
+  .btn-g {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--green); color: #fff;
+    padding: 8px 14px; border-radius: 8px;
+    font-size: 12px; font-weight: 600; border: none; cursor: pointer;
+  }
+  .btn-n {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--navy); color: #fff;
+    padding: 8px 14px; border-radius: 8px;
+    font-size: 12px; font-weight: 600; border: none; cursor: pointer;
+  }
+  .btn-s {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #fff; color: var(--text2);
+    padding: 8px 14px; border-radius: 8px;
+    font-size: 12px; font-weight: 500; border: 1px solid var(--border); cursor: pointer;
+  }
+
+  .table-mini { width: 100%; border-collapse: separate; border-spacing: 0; }
+  .table-mini th { font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--text3); padding: 8px 10px; background: #F8FAFC; border-bottom: 1px solid var(--border); text-align: left; font-weight: 700; }
+  .table-mini td { font-size: 12px; padding: 10px 10px; border-bottom: 1px solid var(--border); color: var(--text2); }
+  .table-mini tbody tr:last-child td { border-bottom: none; }
+  .table-mini .bold { color: var(--navy); font-weight: 600; }
+
+  .kot-card-mini {
+    background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .kot-tnum { font-family: 'Manrope', sans-serif; font-size: 20px; font-weight: 800; color: var(--navy); min-width: 36px; text-align: center; }
+  .kot-info { flex: 1; }
+  .kot-items { font-size: 12px; font-weight: 600; color: var(--navy); }
+  .kot-meta { font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .kot-right { text-align: right; }
+  .kot-amt { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .kot-stat { font-size: 10px; margin-top: 3px; }
+
+  /* Status dots for KOT */
+  .status-row { display: flex; gap: 6px; margin-top: 8px; }
+  .st-btn {
+    padding: 4px 10px; border-radius: 20px; font-size: 9px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em; border: 1.5px solid;
+    cursor: pointer;
+  }
+  .st-btn.active { border-color: var(--navy); background: var(--navy); color: #fff; }
+  .st-btn.inactive { border-color: var(--border); background: transparent; color: var(--text3); }
+
+  /* ── DIVIDER SECTION ── */
+  .chapter-divider {
+    background: linear-gradient(135deg, var(--navy) 0%, #1e3a5f 100%);
+    color: #fff; padding: 40px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .ch-num { font-family: 'Manrope', sans-serif; font-size: 60px; font-weight: 800; opacity: .12; line-height: 1; }
+  .ch-content { flex: 1; padding: 0 32px; }
+  .ch-label { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; opacity: .5; margin-bottom: 8px; }
+  .ch-title { font-family: 'Manrope', sans-serif; font-size: 28px; font-weight: 800; }
+  .ch-desc { font-size: 13px; opacity: .6; margin-top: 8px; }
+  .ch-icon { font-size: 48px; opacity: .3; }
+
+  /* ── TIPS GRID ── */
+  .tips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+  .tip-card {
+    background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 16px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .tip-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .tip-title { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .tip-text { font-size: 12px; color: var(--text2); line-height: 1.55; }
+
+  /* ── SETTINGS PREVIEW ── */
+  .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .setting-item { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+  .si-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 6px; }
+  .si-val { font-size: 13px; font-weight: 500; color: var(--navy); }
+
+  /* ── LEGEND ── */
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin: 14px 0; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text2); }
+  .legend-swatch { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; }
+
+  /* ── QUICK REFERENCE CARD ── */
+  .ref-card {
+    background: linear-gradient(135deg, var(--navy) 0%, #1e3a5f 100%);
+    color: #fff; border-radius: 16px; padding: 28px; margin: 28px 0;
+  }
+  .ref-title { font-family: 'Manrope', sans-serif; font-size: 18px; font-weight: 800; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+  .ref-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .ref-item { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 14px; }
+  .ref-item-title { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .5; margin-bottom: 8px; }
+  .ref-item-list { list-style: none; }
+  .ref-item-list li { font-size: 12px; opacity: .8; padding: 3px 0; display: flex; align-items: center; gap: 7px; }
+  .ref-item-list li::before { content: '→'; color: #34D399; font-size: 10px; flex-shrink: 0; }
+
+  @media print {
+    .chapter-divider { break-before: page; }
+    .doc-section { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ══ -->
+<div class="cover">
+  <div class="cover-logo">
+    <div class="cover-icon">🏨</div>
+    <div class="cover-brand">Outskirts<span>Hospitality Suite</span></div>
+  </div>
+  <div class="cover-title">Admin<br><em>Workflow</em><br>Manual</div>
+  <div class="cover-sub">A complete, step-by-step guide for Hotel & Restaurant owners on how to manage daily operations using the Outskirts platform.</div>
+  <div class="cover-pills">
+    <div class="cover-pill">🏨 Hotel Management</div>
+    <div class="cover-pill">🍽 Restaurant / KOT</div>
+    <div class="cover-pill">👥 Staff & Payroll</div>
+    <div class="cover-pill">📊 Reports & Analytics</div>
+    <div class="cover-pill">⚙️ Settings</div>
+  </div>
+  <div class="cover-version">Outskirts Hospitality Suite · Admin Edition · v1.0</div>
+</div>
+
+<!-- ══ TABLE OF CONTENTS ══ -->
+<div class="toc-section">
+  <div class="toc-inner">
+    <div class="toc-title">What's in this manual</div>
+    <div class="toc-grid">
+      <a href="#getting-started" class="toc-item">
+        <div class="toc-num">1</div>
+        <div><div class="toc-label">Getting Started</div><div class="toc-desc">Dashboard overview & navigation</div></div>
+      </a>
+      <a href="#hotel-rooms" class="toc-item">
+        <div class="toc-num">2</div>
+        <div><div class="toc-label">Hotel — Room Management</div><div class="toc-desc">Room status, booking & check-in/out</div></div>
+      </a>
+      <a href="#hotel-bookings" class="toc-item">
+        <div class="toc-num">3</div>
+        <div><div class="toc-label">Hotel — Bookings</div><div class="toc-desc">New bookings, confirmations, checkout</div></div>
+      </a>
+      <a href="#restaurant-kot" class="toc-item">
+        <div class="toc-num">4</div>
+        <div><div class="toc-label">Restaurant — KOT & Tables</div><div class="toc-desc">Taking orders, KOT, billing tables</div></div>
+      </a>
+      <a href="#restaurant-menu" class="toc-item">
+        <div class="toc-num">5</div>
+        <div><div class="toc-label">Restaurant — Menu</div><div class="toc-desc">Managing food items & categories</div></div>
+      </a>
+      <a href="#staff" class="toc-item">
+        <div class="toc-num">6</div>
+        <div><div class="toc-label">Staff & Payroll</div><div class="toc-desc">Attendance, salaries & advances</div></div>
+      </a>
+      <a href="#reports" class="toc-item">
+        <div class="toc-num">7</div>
+        <div><div class="toc-label">Reports & Analytics</div><div class="toc-desc">Revenue, occupancy & insights</div></div>
+      </a>
+      <a href="#settings" class="toc-item">
+        <div class="toc-num">8</div>
+        <div><div class="toc-label">Settings & Customisation</div><div class="toc-desc">Branding, rooms, tables & theme</div></div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 1 — GETTING STARTED
+═══════════════════════════════════════════ -->
+<div id="getting-started" class="doc-section">
+<div class="page">
+  <div class="section-header">
+    <div class="section-eyebrow">Chapter 1</div>
+    <div class="section-title-lg">Getting Started</div>
+    <div class="section-desc">When you open the Outskirts application, you land directly on the Dashboard. This is your command centre — a live snapshot of how your hotel and restaurant are performing right now.</div>
+  </div>
+
+  <!-- SCREEN: Dashboard -->
+  <div class="mockup-container">
+    <div class="mockup-label">Dashboard Screen</div>
+    <div class="mockup">
+      <div class="mockup-bar">
+        <div class="mockup-dot" style="background:#FF5F57"></div>
+        <div class="mockup-dot" style="background:#FFBD2E; margin-left:5px"></div>
+        <div class="mockup-dot" style="background:#28C840; margin-left:5px"></div>
+        <div class="mockup-url">Outskirts — Hospitality Suite</div>
+      </div>
+      <div class="mockup-body">
+        <!-- Sidebar -->
+        <div class="mockup-sidebar">
+          <div class="ms-logo">
+            <div class="ms-logo-name">Outskirts</div>
+            <div class="ms-logo-sub">Hospitality Suite</div>
+          </div>
+          <div class="ms-section">Overview</div>
+          <div class="ms-item active">📊 Dashboard</div>
+          <div class="ms-section">Hotel</div>
+          <div class="ms-item">🛏 Rooms</div>
+          <div class="ms-item">📋 Bookings</div>
+          <div class="ms-section">Restaurant</div>
+          <div class="ms-item">🍽 KOT / Tables <span class="ms-badge">5</span></div>
+          <div class="ms-item">📜 Menu</div>
+          <div class="ms-section">Operations</div>
+          <div class="ms-item">👥 Staff</div>
+          <div class="ms-item">📦 Inventory</div>
+          <div class="ms-item">📈 Reports</div>
+          <div class="ms-item">⚙️ Settings</div>
+        </div>
+        <!-- Content -->
+        <div class="mockup-content">
+          <div class="kpi-strip">
+            <div class="kpi-box k1">
+              <div class="kpi-lbl">Today's Revenue</div>
+              <div class="kpi-val">₹48,200</div>
+              <div class="kpi-sub" style="color:#10B981">↑ 12% vs yesterday</div>
+            </div>
+            <div class="kpi-box k2">
+              <div class="kpi-lbl">Rooms Occupied</div>
+              <div class="kpi-val">14/20</div>
+              <div class="kpi-sub">70% occupancy</div>
+            </div>
+            <div class="kpi-box k3">
+              <div class="kpi-lbl">Active Tables</div>
+              <div class="kpi-val">8/20</div>
+              <div class="kpi-sub">Restaurant floor</div>
+            </div>
+            <div class="kpi-box k4">
+              <div class="kpi-lbl">Pending KOTs</div>
+              <div class="kpi-val">5</div>
+              <div class="kpi-sub">Awaiting kitchen</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div class="ui-card" style="margin-bottom:0">
+              <div class="ui-card-title">Alerts</div>
+              <div style="font-size:11px;padding:6px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px"><span style="width:7px;height:7px;border-radius:50%;background:#DC2626;display:inline-block"></span>Stocks low: Paneer, Tomatoes</div>
+              <div style="font-size:11px;padding:6px 0;display:flex;align-items:center;gap:8px"><span style="width:7px;height:7px;border-radius:50%;background:#EA580C;display:inline-block"></span>Room 104 — checkout today</div>
+            </div>
+            <div class="ui-card" style="margin-bottom:0">
+              <div class="ui-card-title">Today's Check-outs</div>
+              <div style="font-size:11px;padding:6px 0;border-bottom:1px solid var(--border)">Room 104 — Ramesh Sharma · 11 AM</div>
+              <div style="font-size:11px;padding:6px 0">Room 207 — Priya Mehta · 12 PM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Annotations -->
+  <div class="annotations">
+    <div class="ann">
+      <div class="ann-num navy">1</div>
+      <div class="ann-content">
+        <div class="ann-title">Left Sidebar — Navigation Menu</div>
+        <div class="ann-desc">This dark panel on the left is your main navigation. Click any menu item to jump to that section. The <strong>active page</strong> is highlighted with a green bar on the left. The small green badge (e.g. "5") next to KOT tells you how many pending orders are waiting.</div>
+      </div>
+    </div>
+    <div class="ann">
+      <div class="ann-num green">2</div>
+      <div class="ann-content">
+        <div class="ann-title">KPI Cards (Top Row)</div>
+        <div class="ann-desc">Four summary boxes show your most important numbers at a glance: Today's Revenue, Rooms Occupied, Active Tables, and Pending Kitchen Orders. The coloured bar at the top of each card is just a design indicator. Green trend text means you're up compared to yesterday.</div>
+      </div>
+    </div>
+    <div class="ann">
+      <div class="ann-num amber">3</div>
+      <div class="ann-content">
+        <div class="ann-title">Alerts Panel</div>
+        <div class="ann-desc">This shows urgent items requiring your attention today — low stock alerts, scheduled checkouts, and other notifications. A <strong>red dot</strong> means critical; an <strong>orange dot</strong> is a warning. Always check these first when you open the app each morning.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER DIVIDER: HOTEL
+═══════════════════════════════════════════ -->
+<div class="chapter-divider">
+  <div class="ch-num">A</div>
+  <div class="ch-content">
+    <div class="ch-label">Part A</div>
+    <div class="ch-title">Hotel Management</div>
+    <div class="ch-desc">Rooms · Bookings · Occupancy Timeline · Check-in & Check-out</div>
+  </div>
+  <div class="ch-icon">🏨</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 2 — HOTEL ROOMS
+═══════════════════════════════════════════ -->
+<div id="hotel-rooms" class="doc-section">
+<div class="page">
+  <div class="section-header">
+    <div class="section-eyebrow">Chapter 2 · Hotel</div>
+    <div class="section-title-lg">Room Management</div>
+    <div class="section-desc">The Rooms screen gives you a live visual grid of every room in your property. At a glance, you can see which rooms are occupied, available, reserved, or under maintenance.</div>
+  </div>
+
+  <!-- Room colour legend -->
+  <div class="ui-card">
+    <div class="ui-card-title">Understanding Room Colours</div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-swatch" style="background:#fff;border:2px solid #10B981"></div><strong>Available</strong> — Ready for new guests</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#1B2A47"></div><strong>Occupied</strong> — Guest currently checked in</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#F59E0B"></div><strong>Reserved</strong> — Booking confirmed, guest not yet arrived</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#D92B2B"></div><strong>Maintenance</strong> — Room temporarily out of service</div>
+    </div>
+    <div class="room-grid-mini">
+      <div class="rt rt-av">101<div class="rt-sub">Avail</div></div>
+      <div class="rt rt-oc">102<div class="rt-sub">Ramesh</div></div>
+      <div class="rt rt-re">103<div class="rt-sub">Reserved</div></div>
+      <div class="rt rt-mn">104<div class="rt-sub">Maint.</div></div>
+      <div class="rt rt-av">105<div class="rt-sub">Avail</div></div>
+      <div class="rt rt-oc">201<div class="rt-sub">Priya</div></div>
+    </div>
+  </div>
+
+  <!-- Screen mockup: Rooms -->
+  <div class="mockup-container" style="margin-top:24px">
+    <div class="mockup-label">Rooms Screen — Click any room tile to manage it</div>
+    <div class="mockup">
+      <div class="mockup-bar">
+        <div class="mockup-dot" style="background:#FF5F57"></div>
+        <div class="mockup-url">Outskirts — Rooms</div>
+        <button class="btn-g" style="font-size:11px;padding:5px 12px">+ New Booking</button>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-sidebar">
+          <div class="ms-logo"><div class="ms-logo-name">Outskirts</div><div class="ms-logo-sub">Hospitality Suite</div></div>
+          <div class="ms-section">Hotel</div>
+          <div class="ms-item active">🛏 Rooms</div>
+          <div class="ms-item">📋 Bookings</div>
+          <div class="ms-section">Restaurant</div>
+          <div class="ms-item">🍽 KOT / Tables</div>
+          <div class="ms-item">📜 Menu</div>
+        </div>
+        <div class="mockup-content">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <div style="font-family:'Manrope',sans-serif;font-size:17px;font-weight:800;color:var(--navy)">Room Overview</div>
+            <div style="display:flex;gap:8px">
+              <span class="pill pill-g">14 Occupied</span>
+              <span class="pill pill-a">3 Reserved</span>
+              <span class="pill" style="background:#fff;border:1px solid var(--border);color:var(--text2)">3 Available</span>
+            </div>
+          </div>
+          <div class="room-grid-mini" style="grid-template-columns:repeat(8,1fr)">
+            <div class="rt rt-oc" style="font-size:12px;padding:6px 4px">101<div class="rt-sub">Ramesh</div></div>
+            <div class="rt rt-av" style="font-size:12px;padding:6px 4px">102<div class="rt-sub">Avail</div></div>
+            <div class="rt rt-re" style="font-size:12px;padding:6px 4px">103<div class="rt-sub">Sinha</div></div>
+            <div class="rt rt-oc" style="font-size:12px;padding:6px 4px">104<div class="rt-sub">Priya</div></div>
+            <div class="rt rt-mn" style="font-size:12px;padding:6px 4px">105<div class="rt-sub">Maint</div></div>
+            <div class="rt rt-av" style="font-size:12px;padding:6px 4px">201<div class="rt-sub">Avail</div></div>
+            <div class="rt rt-oc" style="font-size:12px;padding:6px 4px">202<div class="rt-sub">Gupta</div></div>
+            <div class="rt rt-re" style="font-size:12px;padding:6px 4px">203<div class="rt-sub">Sharma</div></div>
+          </div>
+          <div style="margin-top:12px;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 14px;font-size:11px;color:#1E40AF">
+            💡 <strong>Tip:</strong> Click on any room tile to see guest details, add room service, or change its status.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Workflow: Daily Room Operations -->
+  <div style="margin-top:32px">
+    <div style="font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:20px">Daily Room Workflow</div>
+    <div class="workflow">
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-circle">1</div><div class="wf-line"></div></div>
+        <div class="wf-body">
+          <div class="wf-title">Morning Check — Review Today's Activity</div>
+          <div class="wf-desc">Every morning, open the <strong>Rooms</strong> page. Look at the room grid to see who is checking out today (these will show as occupied). The Dashboard also shows a "Today's Check-outs" list for easy reference.</div>
+          <div class="wf-tip">✅ Check the Dashboard Alerts panel first — it tells you which rooms need attention today.</div>
+        </div>
+      </div>
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-circle">2</div><div class="wf-line"></div></div>
+        <div class="wf-body">
+          <div class="wf-title">Guest Check-Out</div>
+          <div class="wf-desc">When a guest is leaving, click their room tile (dark blue). A panel appears on the right showing their name, check-in/out dates, and rate. Use the <strong>"Check-out"</strong> button to mark the room as available. The room tile will immediately turn green (Available).</div>
+          <div class="wf-tip">✅ After check-out, the room automatically becomes available for new bookings.</div>
+        </div>
+      </div>
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-circle">3</div><div class="wf-line"></div></div>
+        <div class="wf-body">
+          <div class="wf-title">Walk-in Guest / New Check-In</div>
+          <div class="wf-desc">Click the <strong>"+ New Booking"</strong> button at the top right. A form will pop up asking for: Guest Name, Phone, Room Number, Check-in Date, Check-out Date, and Rate per night. Fill in the details and click <strong>"Add Booking."</strong> The room will immediately change colour to Reserved (yellow) or Occupied (dark blue) depending on if the guest is checking in right now or later.</div>
+          <div class="wf-warn">⚠️ Make sure the room you select shows as Available (green) before booking it.</div>
+        </div>
+      </div>
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-circle navy">4</div><div class="wf-line"></div></div>
+        <div class="wf-body">
+          <div class="wf-title">Room Service Orders</div>
+          <div class="wf-desc">When a guest in an occupied room orders food, click their room tile, then click <strong>"+ Room Service."</strong> A popup appears where you can enter the items ordered and the amount. This creates a KOT (Kitchen Order Ticket) linked to that room. The charge can later be added to the guest's final bill.</div>
+        </div>
+      </div>
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-circle amber">5</div></div>
+        <div class="wf-body">
+          <div class="wf-title">Mark Room for Maintenance</div>
+          <div class="wf-desc">If a room needs repair or cleaning before it can be used again, click the room tile and change its status to <strong>"Maintenance."</strong> The tile will turn red, clearly indicating to your team that this room is unavailable. Change it back to Available once the work is done.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Occupancy Timeline -->
+  <div style="margin-top:32px">
+    <div style="font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:12px">Occupancy Timeline View</div>
+    <div class="section-desc" style="margin-bottom:16px;font-size:13px">The Rooms page also contains an <strong>Occupancy Timeline</strong> — a calendar-style view showing all rooms across multiple days. This helps you plan ahead.</div>
+    <div class="ui-card">
+      <div class="ui-card-title">How to read the Occupancy Timeline</div>
+      <div style="background:var(--bg);border-radius:8px;padding:12px;font-size:12px;margin-bottom:12px">
+        <div style="display:grid;grid-template-columns:80px repeat(7,1fr);gap:3px;margin-bottom:4px">
+          <div style="font-size:9px;color:var(--text3);font-weight:700;padding:4px 0"></div>
+          <div style="font-size:9px;color:var(--text3);font-weight:700;text-align:center;padding:4px">MON<br>21</div>
+          <div style="font-size:9px;font-weight:700;text-align:center;padding:4px;background:var(--navy);border-radius:6px;color:#fff">TUE<br>22</div>
+          <div style="font-size:9px;color:var(--text3);font-weight:700;text-align:center;padding:4px">WED<br>23</div>
+          <div style="font-size:9px;color:var(--text3);font-weight:700;text-align:center;padding:4px">THU<br>24</div>
+          <div style="font-size:9px;color:var(--text3);font-weight:700;text-align:center;padding:4px">FRI<br>25</div>
+          <div style="font-size:9px;color:var(--text3);font-weight:700;text-align:center;padding:4px">SAT<br>26</div>
+          <div style="font-size:9px;color:var(--text3);font-weight:700;text-align:center;padding:4px">SUN<br>27</div>
+        </div>
+        <!-- Room row 101 -->
+        <div style="display:grid;grid-template-columns:80px repeat(7,1fr);gap:3px;margin-bottom:3px;align-items:center">
+          <div style="font-size:10px;font-weight:700;color:var(--navy);padding:0 6px">101 · Std</div>
+          <div colspan="3" style="grid-column:span 3;background:linear-gradient(90deg,#0D1B3E,#1e3a5f);border-radius:6px;padding:5px 8px;font-size:10px;font-weight:600;color:#fff">● Ramesh S.</div>
+          <div style="border:1.5px dashed rgba(16,185,129,0.3);border-radius:6px;height:26px"></div>
+          <div style="border:1.5px dashed rgba(16,185,129,0.3);border-radius:6px;height:26px"></div>
+          <div colspan="2" style="grid-column:span 2;background:linear-gradient(90deg,#FDE68A,#FCD34D);border-radius:6px;padding:5px 8px;font-size:10px;font-weight:600;color:#78350F">● Sinha</div>
+        </div>
+        <!-- Room row 102 -->
+        <div style="display:grid;grid-template-columns:80px repeat(7,1fr);gap:3px;margin-bottom:3px;align-items:center">
+          <div style="font-size:10px;font-weight:700;color:var(--navy);padding:0 6px">102 · Dlx</div>
+          <div style="border:1.5px dashed rgba(16,185,129,0.3);border-radius:6px;height:26px"></div>
+          <div style="border:1.5px dashed rgba(16,185,129,0.3);border-radius:6px;height:26px"></div>
+          <div colspan="4" style="grid-column:span 4;background:linear-gradient(90deg,#0D1B3E,#1e3a5f);border-radius:6px;padding:5px 8px;font-size:10px;font-weight:600;color:#fff">● Priya Mehta</div>
+          <div style="border:1.5px dashed rgba(16,185,129,0.3);border-radius:6px;height:26px"></div>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-swatch" style="background:linear-gradient(90deg,#0D1B3E,#1e3a5f)"></div>Checked-in (Guest is here)</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:linear-gradient(90deg,#FDE68A,#FCD34D)"></div>Confirmed (Coming soon)</div>
+        <div class="legend-item"><div class="legend-swatch" style="border:1.5px dashed rgba(16,185,129,0.4);background:transparent"></div>Available</div>
+      </div>
+      <div class="wf-tip" style="margin-top:10px">✅ Use the date range pickers at the top of the timeline to look at any week or month. This is very useful for planning availability when guests call to enquire.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 3 — BOOKINGS
+═══════════════════════════════════════════ -->
+<div id="hotel-bookings" class="doc-section">
+<div class="page">
+  <div class="section-header">
+    <div class="section-eyebrow">Chapter 3 · Hotel</div>
+    <div class="section-title-lg">Bookings Management</div>
+    <div class="section-desc">The Bookings page lists every booking — past and present — in a table. You can create new bookings, search, filter, and perform check-in directly from this page.</div>
+  </div>
+
+  <!-- Bookings table mockup -->
+  <div class="mockup-container">
+    <div class="mockup-label">Bookings Screen</div>
+    <div class="ui-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div style="font-family:'Manrope',sans-serif;font-size:15px;font-weight:700;color:var(--navy)">All Bookings <span style="font-size:12px;color:var(--text3);font-weight:500;border:1px solid var(--border);border-radius:12px;padding:2px 8px;margin-left:8px">8</span></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-s">Export</button>
+          <button class="btn-g">+ New Booking</button>
+        </div>
+      </div>
+      <table class="table-mini">
+        <thead><tr>
+          <th>Booking ID</th><th>Guest</th><th>Room</th><th>Check-in</th><th>Check-out</th><th>Nights</th><th>Source</th><th>Amount</th><th>Status</th><th>Action</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td style="font-size:10px;color:var(--text3);font-weight:700">#BK-001</td>
+            <td><div style="display:flex;align-items:center;gap:8px"><div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#6EE7B7,#1e3a5f);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff">RS</div><span class="bold">Ramesh Sharma</span></div></td>
+            <td><span style="background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:2px 7px;font-size:11px;font-weight:700">101</span></td>
+            <td>Apr 20</td><td>Apr 23</td>
+            <td>🌙 3</td>
+            <td><span class="pill pill-g">Direct</span></td>
+            <td class="bold">₹7,500</td>
+            <td><span class="pill" style="background:rgba(13,27,62,0.07);color:var(--navy);border:1px solid rgba(13,27,62,0.14)">● checked-in</span></td>
+            <td><button class="btn-s" style="font-size:11px;padding:4px 9px">View</button></td>
+          </tr>
+          <tr>
+            <td style="font-size:10px;color:var(--text3);font-weight:700">#BK-002</td>
+            <td><div style="display:flex;align-items:center;gap:8px"><div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#6EE7B7,#1e3a5f);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff">PM</div><span class="bold">Priya Mehta</span></div></td>
+            <td><span style="background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:2px 7px;font-size:11px;font-weight:700">104</span></td>
+            <td>Apr 22</td><td>Apr 25</td>
+            <td>🌙 3</td>
+            <td><span class="pill pill-b">MMT</span></td>
+            <td class="bold">₹9,000</td>
+            <td><span class="pill pill-a">● confirmed</span></td>
+            <td><div style="display:flex;gap:5px"><button class="btn-s" style="font-size:11px;padding:4px 9px">View</button><button class="btn-g" style="font-size:11px;padding:4px 9px">Check-in</button></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="annotations" style="margin-top:16px">
+    <div class="ann">
+      <div class="ann-num green">1</div>
+      <div class="ann-content">
+        <div class="ann-title">Booking Source — Where did the booking come from?</div>
+        <div class="ann-desc">The "Source" column tells you where the booking originated. <span class="pill pill-g">Direct</span> means the guest called or walked in. <span class="pill pill-b">MMT</span> = MakeMyTrip, <span class="pill" style="background:#FFF0F6;color:#C2185B;border:1px solid #F8BBD9;font-size:10px;font-weight:600">Goibibo</span> = Goibibo, and <span class="pill pill-a">Agency</span> = travel agent. This helps you track which channel brings the most business.</div>
+      </div>
+    </div>
+    <div class="ann">
+      <div class="ann-num amber">2</div>
+      <div class="ann-content">
+        <div class="ann-title">Status — confirmed vs checked-in</div>
+        <div class="ann-desc"><strong>Confirmed</strong> (yellow) means the booking is made but the guest hasn't arrived yet. <strong>Checked-in</strong> (dark) means the guest is physically present in the hotel. When a confirmed guest arrives, click the green <strong>"Check-in"</strong> button — this updates the room status to Occupied.</div>
+      </div>
+    </div>
+    <div class="ann">
+      <div class="ann-num navy">3</div>
+      <div class="ann-content">
+        <div class="ann-title">View / Send Confirmation</div>
+        <div class="ann-desc">Clicking <strong>"View"</strong> opens a detail popup showing all booking information including phone number. From here you can also <strong>send a confirmation message</strong> to the guest.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Complete booking workflow -->
+  <div style="margin-top:32px">
+    <div style="font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:20px">Complete Booking Lifecycle</div>
+    <div class="workflow">
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-circle">1</div><div class="wf-line"></div></div>
+        <div class="wf-body">
+          <div class="wf-title">Create a New Booking</div>
+          <div class="wf-desc">Go to <strong>Bookings</strong> in the sidebar. Click <strong>"+ New Booking."</strong> Fill in: Guest Name, Phone Number, select the Room, enter Check-in and Check-out dates, and the nightly rate. Click "Add Booking." The booking is now in <strong>Confirmed</strong> status.</div>
+          <div class="wf-tip">✅ Pro tip: You can also create a booking directly from the Rooms page by clicking an available room tile.</div>
+        </div>
+      </div>
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-circle">2</div><div class="wf-line"></div></div>
+        <div class="wf-body">
+          <div class="wf-title">Guest Arrives — Perform Check-In</div>
+          <div class="wf-desc">When the guest arrives, find their booking in the list (look for <span class="pill pill-a">confirmed</span> status). Click the <strong>green "Check-in" button</strong>. The status changes to Checked-In and the room tile on the Rooms page turns dark blue (Occupied).</div>
+        </div>
+      </div>
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-circle">3</div><div class="wf-line"></div></div>
+        <div class="wf-body">
+          <div class="wf-title">During Stay — Room Service Orders</div>
+          <div class="wf-desc">If the guest orders food, go to <strong>Rooms</strong>, click their room tile, and click <strong>"+ Room Service."</strong> Enter the food items and amount. This creates a KOT for the kitchen AND records the charge under the guest's stay.</div>
+        </div>
+      </div>
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-circle amber">4</div></div>
+        <div class="wf-body">
+          <div class="wf-title">Guest Departs — Check-Out</div>
+          <div class="wf-desc">On the departure date, click the room tile and click <strong>"Check-out."</strong> The room immediately turns green (Available). Any outstanding room service charges should be settled before checkout. The booking will remain in your records for reporting.</div>
+          <div class="wf-warn">⚠️ Always collect payment before clicking Check-out. Once checked out, the room is released for new guests.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER DIVIDER: RESTAURANT
+═══════════════════════════════════════════ -->
+<div class="chapter-divider">
+  <div class="ch-num">B</div>
+  <div class="ch-content">
+    <div class="ch-label">Part B</div>
+    <div class="ch-title">Restaurant Management</div>
+    <div class="ch-desc">KOT & Tables · Dine-in · Parcel Orders · Room Service · Billing · Menu</div>
+  </div>
+  <div class="ch-icon">🍽</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 4 — KOT & TABLES
+═══════════════════════════════════════════ -->
+<div id="restaurant-kot" class="doc-section">
+<div class="page">
+  <div class="section-header">
+    <div class="section-eyebrow">Chapter 4 · Restaurant</div>
+    <div class="section-title-lg">KOT & Table Management</div>
+    <div class="section-desc">KOT stands for <strong>Kitchen Order Ticket</strong>. Every order placed in your restaurant — whether at a table, parcel, or room service — goes through KOT. This is the heart of your restaurant operations.</div>
+  </div>
+
+  <div class="infobox">
+    <strong>What is a KOT?</strong> A KOT (Kitchen Order Ticket) is a record of an order sent to the kitchen. It tracks what was ordered, for which table/room, the status (Pending → Cooking → Served), and the amount. As the admin, you can see all active KOTs and their current status in real time.
+  </div>
+
+  <!-- KOT Screen mockup -->
+  <div class="mockup-container">
+    <div class="mockup-label">KOT & Tables Screen — Table View</div>
+    <div class="mockup">
+      <div class="mockup-bar">
+        <div class="mockup-dot" style="background:#FF5F57"></div>
+        <div class="mockup-url">Outskirts — KOT / Tables</div>
+        <div style="display:flex;gap:7px">
+          <button class="btn-s" style="font-size:11px;padding:5px 10px">+ Parcel</button>
+          <button class="btn-s" style="font-size:11px;padding:5px 10px">+ Room Service</button>
+        </div>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-sidebar">
+          <div class="ms-logo"><div class="ms-logo-name">Outskirts</div><div class="ms-logo-sub">Hospitality Suite</div></div>
+          <div class="ms-section">Restaurant</div>
+          <div class="ms-item active">🍽 KOT / Tables <span class="ms-badge">5</span></div>
+          <div class="ms-item">📜 Menu</div>
+        </div>
+        <div class="mockup-content">
+          <!-- View switcher -->
+          <div style="display:flex;gap:6px;margin-bottom:14px">
+            <button class="btn-g" style="font-size:11px;padding:5px 12px">⊞ Tables</button>
+            <button class="btn-s" style="font-size:11px;padding:5px 12px">≡ KOT List</button>
+            <div style="margin-left:auto;display:flex;gap:5px">
+              <span style="padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;background:var(--navy);color:#fff;cursor:pointer">Main Floor</span>
+              <span style="padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;border:1px solid var(--border);color:var(--text2);cursor:pointer">Bar</span>
+              <span style="padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;border:1px solid var(--border);color:var(--text2);cursor:pointer">Patio</span>
+            </div>
+          </div>
+          <!-- Table grid -->
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px">
+            <!-- Active table -->
+            <div style="background:rgba(16,185,129,0.08);border:2px solid var(--green);border-radius:10px;padding:10px;text-align:center;cursor:pointer">
+              <div style="font-family:'Manrope',sans-serif;font-size:18px;font-weight:800;color:var(--navy)">T1</div>
+              <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Active · 4 pax</div>
+              <div style="font-size:10px;font-weight:600;color:var(--green);margin-top:4px">₹850</div>
+            </div>
+            <!-- Available table -->
+            <div style="background:#fff;border:2px dashed #CBD5E1;border-radius:10px;padding:10px;text-align:center;cursor:pointer">
+              <div style="font-family:'Manrope',sans-serif;font-size:18px;font-weight:800;color:var(--text3)">T2</div>
+              <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Available</div>
+            </div>
+            <div style="background:rgba(16,185,129,0.08);border:2px solid var(--green);border-radius:10px;padding:10px;text-align:center;cursor:pointer">
+              <div style="font-family:'Manrope',sans-serif;font-size:18px;font-weight:800;color:var(--navy)">T3</div>
+              <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Active · 2 pax</div>
+              <div style="font-size:10px;font-weight:600;color:var(--green);margin-top:4px">₹420</div>
+            </div>
+            <div style="background:#fff;border:2px dashed #CBD5E1;border-radius:10px;padding:10px;text-align:center;cursor:pointer">
+              <div style="font-family:'Manrope',sans-serif;font-size:18px;font-weight:800;color:var(--text3)">T4</div>
+              <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Available</div>
+            </div>
+            <div style="background:rgba(16,185,129,0.08);border:2px solid var(--green);border-radius:10px;padding:10px;text-align:center;cursor:pointer">
+              <div style="font-family:'Manrope',sans-serif;font-size:18px;font-weight:800;color:var(--navy)">T5</div>
+              <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Active · 6 pax</div>
+              <div style="font-size:10px;font-weight:600;color:var(--green);margin-top:4px">₹1,200</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="annotations" style="margin-top:16px">
+    <div class="ann">
+      <div class="ann-num green">1</div>
+      <div class="ann-content">
+        <div class="ann-title">Table Tiles — Green Border = Active Order</div>
+        <div class="ann-desc">Tables with a solid green border have active orders. The amount shown is the current running bill. Tables with a dashed grey border are available. Click any table tile to see its orders and manage billing.</div>
+      </div>
+    </div>
+    <div class="ann">
+      <div class="ann-num navy">2</div>
+      <div class="ann-content">
+        <div class="ann-title">Switch between Table View and KOT List View</div>
+        <div class="ann-desc">The <strong>Table View</strong> shows a visual floor plan — great for front-of-house staff. The <strong>KOT List View</strong> shows all orders as a list sorted by time — great for kitchen monitoring. You can switch between these using the buttons at the top.</div>
+      </div>
+    </div>
+    <div class="ann">
+      <div class="ann-num amber">3</div>
+      <div class="ann-content">
+        <div class="ann-title">Floor Filters</div>
+        <div class="ann-desc">If your restaurant has multiple sections (Main Floor, Bar, Patio, Private Dining), use the filter chips to switch between them. Only tables from the selected section will be shown.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Restaurant Workflow -->
+  <div style="margin-top:36px">
+    <div style="font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:20px">Complete Restaurant Dine-In Workflow</div>
+    <div class="workflow">
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-circle">1</div><div class="wf-line"></div></div>
+        <div class="wf-body">
+          <div class="wf-title">Guest Arrives & is Seated</div>
+          <div class="wf-desc">Go to <strong>KOT / Tables</strong>. Find an available table (dashed grey border) and click it. A panel opens on the right side. Click <strong>"Mark Active"</strong> or place an order to activate the table. Enter the number of guests (pax) if prompted.</div>
+        </div>
+      </div>
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-circle">2</div><div class="wf-line"></div></div>
+        <div class="wf-body">
+          <div class="wf-title">Take the Order & Create KOT</div>
+          <div class="wf-desc">With the table selected, click the <strong>"KOT"</strong> tab in the right panel. Enter the items ordered (e.g. "Paneer Tikka ×2, Dal Makhani ×1") and the amount. Click <strong>"Place Order."</strong> This creates a KOT and the kitchen sees it immediately. The KOT starts in <strong>Pending</strong> status.</div>
+          <div class="wf-tip">✅ You can add multiple KOTs to the same table as guests order more items.</div>
+        </div>
+      </div>
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-circle">3</div><div class="wf-line"></div></div>
+        <div class="wf-body">
+          <div class="wf-title">Kitchen Updates KOT Status</div>
+          <div class="wf-desc">As the kitchen works on the order, the status progresses through three stages. You can update these from the KOT List view by clicking the buttons on each order card.</div>
+          <div class="status-row" style="margin:12px 0">
+            <button class="st-btn active">PENDING</button>
+            <span style="font-size:12px;color:var(--text3);align-self:center">→</span>
+            <button class="st-btn active" style="border-color:#D97706;background:#D97706">COOKING</button>
+            <span style="font-size:12px;color:var(--text3);align-self:center">→</span>
+            <button class="st-btn active" style="border-color:#059669;background:#059669">SERVED</button>
+          </div>
+        </div>
+      </div>
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-circle amber">4</div><div class="wf-line"></div></div>
+        <div class="wf-body">
+          <div class="wf-title">Generate the Bill</div>
+          <div class="wf-desc">When the guest asks for the bill, click their table tile and switch to the <strong>"Bill"</strong> tab in the right panel. All orders for that table are listed with their amounts. You can:</div>
+          <ul style="margin:10px 0 10px 20px;font-size:13px;color:var(--text2);line-height:2">
+            <li>Set the <strong>GST percentage</strong> (e.g. 5%)</li>
+            <li>Apply a <strong>Discount</strong> (in % of total)</li>
+            <li>Enter the customer's <strong>phone number</strong></li>
+            <li>Select <strong>payment method</strong>: Cash, UPI, Card, or Room Bill</li>
+          </ul>
+          <div class="wf-warn">⚠️ "Room Bill" option adds the restaurant charge to the hotel guest's room bill — only use this for hotel guests!</div>
+        </div>
+      </div>
+      <div class="wf-step">
+        <div class="wf-left"><div class="wf-circle">5</div></div>
+        <div class="wf-body">
+          <div class="wf-title">Checkout & Close Table</div>
+          <div class="wf-desc">After the guest pays, click <strong>"Checkout & Close Table."</strong> The table immediately becomes available again (dashed grey border). The transaction is recorded in your Reports for the day.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bill mockup -->
+  <div style="margin-top:24px">
+    <div class="mockup-label">Billing Panel — What you see when generating a bill</div>
+    <div class="ui-card" style="max-width:380px">
+      <div class="ui-card-title">Bill — Table 3</div>
+      <div style="font-size:12px;padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between"><span style="color:var(--text2)">Paneer Tikka ×2</span><span style="font-weight:600;color:var(--navy)">₹420</span></div>
+      <div style="font-size:12px;padding:8px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between"><span style="color:var(--text2)">Dal Makhani ×1</span><span style="font-weight:600;color:var(--navy)">₹180</span></div>
+      <div style="background:var(--bg);border-radius:8px;padding:12px;margin:12px 0">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text3);margin-bottom:4px"><span>Subtotal</span><span>₹600</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text3);margin-bottom:4px"><span>GST (5%)</span><span>₹30</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:#059669;margin-bottom:8px"><span>Discount</span><span>— ₹0</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:700;color:var(--navy);border-top:1px solid var(--border);padding-top:8px"><span>Total</span><span>₹630</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+        <button class="btn-n" style="font-size:11px;padding:7px;border-radius:7px;justify-content:center">Cash</button>
+        <button class="btn-s" style="font-size:11px;padding:7px;border-radius:7px;justify-content:center">UPI</button>
+        <button class="btn-s" style="font-size:11px;padding:7px;border-radius:7px;justify-content:center">Card</button>
+        <button class="btn-s" style="font-size:11px;padding:7px;border-radius:7px;justify-content:center">Room Bill</button>
+      </div>
+      <button class="btn-g" style="width:100%;justify-content:center;border-radius:8px">Checkout & Close Table</button>
+    </div>
+  </div>
+
+  <!-- Parcel & Room Service -->
+  <div style="margin-top:36px">
+    <div style="font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:16px">Parcel Orders & Room Service</div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-icon">📦</div>
+        <div>
+          <div class="tip-title">Parcel / Takeaway Orders</div>
+          <div class="tip-text">Click <strong>"+ Parcel"</strong> at the top of the KOT page. Enter an Order Token (like P-01), the customer name, items ordered, pickup time, and amount. Click "Place Parcel Order." It will appear in the KOT list tagged as a Parcel order.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🛎</div>
+        <div>
+          <div class="tip-title">Room Service Orders</div>
+          <div class="tip-text">Click <strong>"+ Room Service"</strong> at the top. Select the occupied room from the dropdown, enter the items and amount. This creates a KOT tagged as Room Service and links the charge to that guest's room bill automatically.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KOT List View -->
+  <div style="margin-top:28px">
+    <div class="mockup-label">KOT List View — Monitor all active orders at once</div>
+    <div class="ui-card">
+      <div class="ui-card-title">Active KOT Orders</div>
+      <div class="kot-card-mini">
+        <div class="kot-tnum">T1</div>
+        <div class="kot-info">
+          <div class="kot-items">Butter Chicken ×2, Naan ×4</div>
+          <div class="kot-meta">Dine-in · 4 pax · 5 min ago</div>
+        </div>
+        <div class="kot-right">
+          <div class="kot-amt">₹850</div>
+          <div class="kot-stat"><span class="pill pill-a">Cooking</span></div>
+        </div>
+      </div>
+      <div class="kot-card-mini">
+        <div class="kot-tnum">P-2</div>
+        <div class="kot-info">
+          <div class="kot-items">Biryani ×1, Raita ×1</div>
+          <div class="kot-meta">Parcel · Vikram · Pickup 8PM</div>
+        </div>
+        <div class="kot-right">
+          <div class="kot-amt">₹320</div>
+          <div class="kot-stat"><span class="pill" style="background:#FEF2F2;color:#DC2626;border:1px solid #FECACA;font-size:10px;font-weight:600">Pending</span></div>
+        </div>
+      </div>
+      <div class="kot-card-mini">
+        <div class="kot-tnum">201</div>
+        <div class="kot-info">
+          <div class="kot-items">Chicken Curry ×2, Roti ×6</div>
+          <div class="kot-meta">Room Service · Priya Mehta</div>
+        </div>
+        <div class="kot-right">
+          <div class="kot-amt">₹560</div>
+          <div class="kot-stat"><span class="pill pill-g">Served</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 5 — MENU MANAGEMENT
+═══════════════════════════════════════════ -->
+<div id="restaurant-menu" class="doc-section">
+<div class="page">
+  <div class="section-header">
+    <div class="section-eyebrow">Chapter 5 · Restaurant</div>
+    <div class="section-title-lg">Menu Management</div>
+    <div class="section-desc">The Menu page lets you manage all the food and beverage items available in your restaurant. You can add new items, update prices, toggle availability, and organise by category.</div>
+  </div>
+
+  <div class="mockup-container">
+    <div class="mockup-label">Menu Screen</div>
+    <div class="ui-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div style="font-family:'Manrope',sans-serif;font-size:15px;font-weight:700;color:var(--navy)">Menu Items</div>
+        <button class="btn-g">+ Add Item</button>
+      </div>
+      <!-- Category tabs -->
+      <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap">
+        <span style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;background:var(--navy);color:#fff">All</span>
+        <span style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:500;border:1px solid var(--border);color:var(--text2)">Starters</span>
+        <span style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:500;border:1px solid var(--border);color:var(--text2)">Main Course</span>
+        <span style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:500;border:1px solid var(--border);color:var(--text2)">Breads</span>
+        <span style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:500;border:1px solid var(--border);color:var(--text2)">Desserts</span>
+        <span style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:500;border:1px solid var(--border);color:var(--text2)">Beverages</span>
+      </div>
+      <table class="table-mini">
+        <thead><tr><th>Item</th><th>Category</th><th>Type</th><th>Price</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="bold">Paneer Tikka</td>
+            <td>Starters</td>
+            <td><span class="pill" style="background:#FFF0F0;color:#DC2626;border:1px solid #FECACA;font-size:9px">🔴 Non-Veg</span></td>
+            <td class="bold">₹280</td>
+            <td><span class="pill pill-g">Available</span></td>
+            <td><div style="display:flex;gap:5px"><button class="btn-s" style="font-size:11px;padding:4px 9px">Edit</button><button class="btn-s" style="font-size:11px;padding:4px 9px;color:#DC2626">Del</button></div></td>
+          </tr>
+          <tr>
+            <td class="bold">Dal Makhani</td>
+            <td>Main Course</td>
+            <td><span class="pill" style="background:#F0FFF4;color:#059669;border:1px solid rgba(16,185,129,0.25);font-size:9px">🟢 Veg</span></td>
+            <td class="bold">₹220</td>
+            <td><span class="pill pill-r">Unavailable</span></td>
+            <td><div style="display:flex;gap:5px"><button class="btn-s" style="font-size:11px;padding:4px 9px">Edit</button><button class="btn-s" style="font-size:11px;padding:4px 9px;color:#DC2626">Del</button></div></td>
+          </tr>
+          <tr>
+            <td class="bold">Mango Lassi</td>
+            <td>Beverages</td>
+            <td><span class="pill" style="background:#F0FFF4;color:#059669;border:1px solid rgba(16,185,129,0.25);font-size:9px">🟢 Veg</span></td>
+            <td class="bold">₹120</td>
+            <td><span class="pill pill-g">Available</span></td>
+            <td><div style="display:flex;gap:5px"><button class="btn-s" style="font-size:11px;padding:4px 9px">Edit</button><button class="btn-s" style="font-size:11px;padding:4px 9px;color:#DC2626">Del</button></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="workflow" style="margin-top:28px">
+    <div style="font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:20px">How to Manage Your Menu</div>
+    <div class="wf-step">
+      <div class="wf-left"><div class="wf-circle">1</div><div class="wf-line"></div></div>
+      <div class="wf-body">
+        <div class="wf-title">Add a New Menu Item</div>
+        <div class="wf-desc">Click <strong>"+ Add Item."</strong> Fill in: Item Name (e.g. "Chicken Biryani"), Category (Starters, Main Course, Breads, Desserts, Beverages), Veg or Non-Veg type, and Price. Click Save. The item is now available to be added to any order.</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-left"><div class="wf-circle">2</div><div class="wf-line"></div></div>
+      <div class="wf-body">
+        <div class="wf-title">Update a Price</div>
+        <div class="wf-desc">Find the item in the list, click <strong>"Edit,"</strong> change the price, and save. The new price will apply to all new orders immediately.</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-left"><div class="wf-circle amber">3</div></div>
+      <div class="wf-body">
+        <div class="wf-title">Mark an Item as Unavailable</div>
+        <div class="wf-desc">If an item runs out (e.g. you've run out of Paneer today), click Edit and toggle its status to <strong>Unavailable.</strong> It will show with a red badge. This prevents your staff from taking orders for something you can't serve. Remember to mark it Available again once restocked.</div>
+        <div class="wf-warn">⚠️ Items marked Unavailable will still appear in the menu list for your records, but should not be ordered until made Available again.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CHAPTER DIVIDER: OPERATIONS
+═══════════════════════════════════════════ -->
+<div class="chapter-divider">
+  <div class="ch-num">C</div>
+  <div class="ch-content">
+    <div class="ch-label">Part C</div>
+    <div class="ch-title">Operations & Admin</div>
+    <div class="ch-desc">Staff & Payroll · Inventory · Reports & Analytics · Settings</div>
+  </div>
+  <div class="ch-icon">⚙️</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 6 — STAFF & PAYROLL
+═══════════════════════════════════════════ -->
+<div id="staff" class="doc-section">
+<div class="page">
+  <div class="section-header">
+    <div class="section-eyebrow">Chapter 6 · Operations</div>
+    <div class="section-title-lg">Staff & Payroll</div>
+    <div class="section-desc">Manage all your employees from one place. Track daily attendance, record salary advances, and process monthly payroll. The Staff page has three tabs: Overview, Attendance, and Payroll.</div>
+  </div>
+
+  <div class="mockup-container">
+    <div class="mockup-label">Staff Screen — Three Tabs</div>
+    <div class="ui-card">
+      <div class="kpi-strip">
+        <div class="kpi-box k1"><div class="kpi-lbl">Total Staff</div><div class="kpi-val">12</div></div>
+        <div class="kpi-box k2"><div class="kpi-lbl">Present Today</div><div class="kpi-val" style="color:#059669">10</div></div>
+        <div class="kpi-box k3"><div class="kpi-lbl">Absent Today</div><div class="kpi-val" style="color:#DC2626">2</div></div>
+        <div class="kpi-box k4"><div class="kpi-lbl">Net Payable</div><div class="kpi-val">₹1.8L</div></div>
+      </div>
+      <!-- Tabs -->
+      <div style="display:inline-flex;background:var(--bg);border-radius:9px;padding:3px;gap:2px;border:1px solid var(--border);margin-bottom:16px">
+        <button class="btn-n" style="font-size:12px;padding:6px 14px;border-radius:7px">Overview</button>
+        <button class="btn-s" style="font-size:12px;padding:6px 14px;border-radius:7px">Attendance</button>
+        <button class="btn-s" style="font-size:12px;padding:6px 14px;border-radius:7px">Payroll</button>
+      </div>
+      <!-- Staff cards -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;align-items:center;gap:10px">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#10B981,#0D1B3E);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;flex-shrink:0">RK</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:600;color:var(--navy)">Ravi Kumar</div>
+            <div style="font-size:11px;color:var(--text3)">Head Chef</div>
+          </div>
+          <div><span class="pill pill-g">Present</span></div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;align-items:center;gap:10px">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#10B981,#0D1B3E);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;flex-shrink:0">SP</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:600;color:var(--navy)">Sunita Patil</div>
+            <div style="font-size:11px;color:var(--text3)">Receptionist</div>
+          </div>
+          <div><span class="pill pill-r">Absent</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="workflow" style="margin-top:28px">
+    <div style="font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:20px">Staff Management Workflow</div>
+    <div class="wf-step">
+      <div class="wf-left"><div class="wf-circle">1</div><div class="wf-line"></div></div>
+      <div class="wf-body">
+        <div class="wf-title">Add a New Staff Member</div>
+        <div class="wf-desc">Click <strong>"+ Add Staff."</strong> Enter Name, Role (e.g. Waiter, Chef, Receptionist, Housekeeping), Department (Hotel or Restaurant), and monthly Salary. The staff member is now listed and can have attendance tracked from today.</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-left"><div class="wf-circle">2</div><div class="wf-line"></div></div>
+      <div class="wf-body">
+        <div class="wf-title">Mark Daily Attendance</div>
+        <div class="wf-desc">Go to the <strong>Attendance</strong> tab every morning. Each staff member has a <strong>Present / Absent</strong> toggle. Mark each person accordingly. This builds a monthly attendance record which is used in the Payroll calculation.</div>
+        <div class="wf-tip">✅ Make this a daily morning routine — accurate attendance is essential for correct salary calculations.</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-left"><div class="wf-circle">3</div><div class="wf-line"></div></div>
+      <div class="wf-body">
+        <div class="wf-title">Record a Salary Advance</div>
+        <div class="wf-desc">If an employee requests an advance, click on their card, then click <strong>"Advance."</strong> Enter the amount and reason (e.g. "Medical"). The advance is recorded and will automatically be deducted from their next salary payment. You can also clear the advance if it is repaid separately.</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-left"><div class="wf-circle amber">4</div></div>
+      <div class="wf-body">
+        <div class="wf-title">Process Monthly Payroll</div>
+        <div class="wf-desc">At the end of the month, switch to the <strong>Payroll</strong> tab. You'll see a table showing every staff member, their base salary, any advance deductions, and the final <strong>Net Payable</strong> amount. Use the date range at the top to view any month. Once you've paid a staff member, mark them as <strong>"Paid"</strong> — their row will turn green confirming payment.</div>
+        <div class="wf-tip">✅ The Payroll Summary at the bottom shows totals: Total Base Salaries, Total Advances, Net Payable, and how many staff have been paid this month.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 7 — REPORTS
+═══════════════════════════════════════════ -->
+<div id="reports" class="doc-section">
+<div class="page">
+  <div class="section-header">
+    <div class="section-eyebrow">Chapter 7 · Operations</div>
+    <div class="section-title-lg">Reports & Analytics</div>
+    <div class="section-desc">The Reports section gives you a detailed financial picture of your business. You can see revenue trends, occupancy rates, restaurant sales, and compare performance across time periods.</div>
+  </div>
+
+  <div class="ui-card">
+    <div class="ui-card-title">What the Reports Page Shows You</div>
+    <div class="tips-grid" style="margin-top:10px">
+      <div class="tip-card">
+        <div class="tip-icon">📈</div>
+        <div>
+          <div class="tip-title">Revenue Charts</div>
+          <div class="tip-text">Bar charts showing daily revenue split between Hotel and Restaurant income. Use these to identify your busiest days and weeks.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🛏</div>
+        <div>
+          <div class="tip-title">Occupancy Rate</div>
+          <div class="tip-text">Shows what percentage of your rooms were occupied over a date range. A high occupancy rate means strong hotel performance.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🍴</div>
+        <div>
+          <div class="tip-title">Restaurant Sales</div>
+          <div class="tip-text">Breakdown of restaurant revenue by category (Dine-in, Parcel, Room Service). Helps you understand which service type earns more.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">⚡</div>
+        <div>
+          <div class="tip-title">Electricity & Utilities</div>
+          <div class="tip-text">Track utility consumption and costs over time, helping you identify energy usage patterns and potential savings.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-tip" style="margin-top:20px">
+    ✅ <strong>When to check Reports:</strong> Review daily at closing to see that day's income. Do a weekly review every Sunday to compare with the previous week. Monthly review on the 1st of each month to track trends and make business decisions.
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 8 — SETTINGS
+═══════════════════════════════════════════ -->
+<div id="settings" class="doc-section">
+<div class="page">
+  <div class="section-header">
+    <div class="section-eyebrow">Chapter 8 · Admin</div>
+    <div class="section-title-lg">Settings & Customisation</div>
+    <div class="section-desc">Settings is where you set up your business once and rarely need to change it again. This includes your brand name, logo, room configuration, table setup, and theme colour.</div>
+  </div>
+
+  <div class="settings-grid">
+    <div class="setting-item">
+      <div class="si-label">🏷 Branding</div>
+      <div class="si-val">Change your business name, tagline, and logo</div>
+    </div>
+    <div class="setting-item">
+      <div class="si-label">🎨 Theme</div>
+      <div class="si-val">Choose a colour scheme (Midnight, Indigo, Espresso, Ocean, Rose)</div>
+    </div>
+    <div class="setting-item">
+      <div class="si-label">🛏 Rooms Config</div>
+      <div class="si-val">Add, edit or remove rooms. Set type, capacity, and nightly rate.</div>
+    </div>
+    <div class="setting-item">
+      <div class="si-label">🍽 Tables Config</div>
+      <div class="si-val">Add or remove dining tables. Set floor, type, and capacity.</div>
+    </div>
+  </div>
+
+  <div class="workflow" style="margin-top:28px">
+    <div style="font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:20px">Initial Setup Checklist</div>
+    <div class="wf-step">
+      <div class="wf-left"><div class="wf-circle">1</div><div class="wf-line"></div></div>
+      <div class="wf-body">
+        <div class="wf-title">Set Your Business Name & Logo</div>
+        <div class="wf-desc">Go to Settings → <strong>Brand & Logo.</strong> Enter your property name (e.g. "The Grand Residency"), tagline (e.g. "Where Every Stay Feels Like Home"), and upload your logo. Click "Save Brand." Your name will appear in the top-left sidebar on all screens.</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-left"><div class="wf-circle">2</div><div class="wf-line"></div></div>
+      <div class="wf-body">
+        <div class="wf-title">Configure Your Rooms</div>
+        <div class="wf-desc">Go to Settings → <strong>Rooms.</strong> You'll see a list of all existing rooms. Click <strong>"+ Add Room"</strong> to add new ones — enter the Room Number, Type (Standard/Deluxe/Suite/Premium), Capacity (number of persons), and Rate per night. Do this for all your rooms. You can also delete rooms you don't use.</div>
+        <div class="wf-tip">✅ Set up all your rooms correctly before you start taking bookings. The room grid on the Rooms page will automatically show all rooms you add here.</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-left"><div class="wf-circle">3</div><div class="wf-line"></div></div>
+      <div class="wf-body">
+        <div class="wf-title">Configure Your Restaurant Tables</div>
+        <div class="wf-desc">Go to Settings → <strong>Tables.</strong> Click <strong>"+ Add Table"</strong> to add each table: enter Table Number (e.g. T1 or A5), Floor (Main Floor, Bar, Patio, Private Dining), Table Type, and Seating Capacity. All tables added here will appear in the KOT / Tables screen.</div>
+      </div>
+    </div>
+    <div class="wf-step">
+      <div class="wf-left"><div class="wf-circle amber">4</div></div>
+      <div class="wf-body">
+        <div class="wf-title">Choose Your Colour Theme</div>
+        <div class="wf-desc">Go to Settings → <strong>Theme.</strong> Choose from 5 preset colour schemes: <strong>Midnight</strong> (dark navy + green), <strong>Indigo</strong>, <strong>Espresso</strong> (warm brown + amber), <strong>Ocean</strong> (sky blue), or <strong>Rose</strong> (pink/red). You can also enter custom hex colour codes if you want your exact brand colours. Click "Save" and the entire app instantly updates to the new colours.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     QUICK REFERENCE CARD
+═══════════════════════════════════════════ -->
+<div style="background:var(--bg);padding:40px 0">
+<div class="page">
+  <div class="ref-card">
+    <div class="ref-title">📋 Quick Reference — Daily Checklists</div>
+    <div class="ref-grid">
+      <div class="ref-item">
+        <div class="ref-item-title">🌅 Morning Routine</div>
+        <ul class="ref-item-list">
+          <li>Open Dashboard — check alerts</li>
+          <li>Review today's check-outs in Rooms</li>
+          <li>Mark staff attendance</li>
+          <li>Check inventory alerts</li>
+          <li>Review any pending KOTs from previous night</li>
+        </ul>
+      </div>
+      <div class="ref-item">
+        <div class="ref-item-title">🌞 During the Day</div>
+        <ul class="ref-item-list">
+          <li>Process hotel check-ins via Bookings</li>
+          <li>Create KOTs for all restaurant orders</li>
+          <li>Update KOT status (Cooking → Served)</li>
+          <li>Handle room service requests</li>
+          <li>Process table checkouts with correct payment</li>
+        </ul>
+      </div>
+      <div class="ref-item">
+        <div class="ref-item-title">🌙 Evening / Night Close</div>
+        <ul class="ref-item-list">
+          <li>Close all paid restaurant tables</li>
+          <li>Check Reports for today's revenue</li>
+          <li>Confirm tomorrow's arrivals in Bookings</li>
+          <li>Update menu item availability if needed</li>
+          <li>Note any rooms going on maintenance</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tips grid -->
+  <div style="margin-top:28px">
+    <div style="font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:16px">Important Tips to Remember</div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-icon">🔔</div>
+        <div>
+          <div class="tip-title">Watch the Green Badge on KOT</div>
+          <div class="tip-text">The number badge next to "KOT / Tables" in the sidebar shows how many pending orders are waiting. If this number is growing, your kitchen needs attention.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">💰</div>
+        <div>
+          <div class="tip-title">Room Bill = Add to Hotel Invoice</div>
+          <div class="tip-text">When a hotel guest eats in your restaurant and says "add it to my room," always select "Room Bill" as the payment method. This ensures the charge appears on their hotel checkout bill.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">📅</div>
+        <div>
+          <div class="tip-title">Use the Occupancy Timeline for Planning</div>
+          <div class="tip-text">Before confirming a booking, always check the Occupancy Timeline to see if the room is free for those dates. This prevents double-bookings.</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">⚠️</div>
+        <div>
+          <div class="tip-title">Always Enter Phone Numbers</div>
+          <div class="tip-text">When creating bookings and billing restaurant tables, always enter the customer's phone number. This enables confirmation messages and helps in case of disputes.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Footer -->
+<div style="background:var(--navy);color:rgba(255,255,255,0.5);padding:28px 0;text-align:center;font-size:12px">
+  <div style="font-family:'Manrope',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:6px">Outskirts Hospitality Suite</div>
+  Admin Workflow Manual · For internal use by business owners and managers · Version 1.0
+</div>
+
+</body>
+</html>
