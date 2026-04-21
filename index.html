@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Workflow Manual — Outskirts Hospitality Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B3E;
+    --navy-light: #1e3a5f;
+    --green: #10B981;
+    --green-light: #6EE7B7;
+    --amber: #D97706;
+    --red: #DC2626;
+    --purple: #7C3AED;
+    --bg: #F8F9FB;
+    --surface: #FFFFFF;
+    --border: #E4E8F0;
+    --text1: #0D1B3E;
+    --text2: #475569;
+    --text3: #94A3B8;
+    --hotel-color: #0C4A6E;
+    --hotel-light: #E0F2FE;
+    --rest-color: #7C2D12;
+    --rest-light: #FFF7ED;
+    --shared-color: #1E3A5F;
+    --shared-light: #EFF6FF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text1);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--navy);
+    color: #fff;
+    padding: 72px 60px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: rgba(16,185,129,0.08);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 30%;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .cover-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(16,185,129,0.18);
+    border: 1px solid rgba(16,185,129,0.35);
+    color: #6EE7B7;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+  }
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 18px;
+    max-width: 680px;
+  }
+  .cover-title span { color: #6EE7B7; }
+  .cover-sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.55);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+  .cover-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .cover-tag {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    padding: 7px 16px;
+    border-radius: 8px;
+  }
+  .cover-tag .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 60px;
+  }
+  .toc-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 18px;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+  .toc-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text2);
+    transition: all .15s;
+    border: 1px solid transparent;
+  }
+  .toc-item:hover {
+    background: var(--bg);
+    color: var(--navy);
+    border-color: var(--border);
+  }
+  .toc-num {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── MAIN ── */
+  .page { max-width: 860px; margin: 0 auto; padding: 56px 40px; }
+
+  /* ── SECTION ── */
+  .part-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .section-intro {
+    font-size: 15px;
+    color: var(--text2);
+    max-width: 640px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  /* ── WORKFLOW STEPS ── */
+  .steps { display: flex; flex-direction: column; gap: 0; margin-bottom: 40px; }
+  .step {
+    display: flex;
+    gap: 20px;
+    position: relative;
+  }
+  .step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 48px;
+    bottom: -2px;
+    width: 2px;
+    background: var(--border);
+    z-index: 0;
+  }
+  .step-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    padding-top: 14px;
+  }
+  .step-num {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    flex-shrink: 0;
+    z-index: 1;
+    position: relative;
+    border: 2px solid;
+  }
+  .step-body {
+    padding: 14px 0 32px;
+    flex: 1;
+  }
+  .step-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text1);
+    margin-bottom: 6px;
+  }
+  .step-desc {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+  .tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    background: rgba(16,185,129,0.06);
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 9px;
+    padding: 10px 13px;
+    font-size: 13px;
+    color: #065F46;
+    margin-top: 10px;
+  }
+  .tip-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .warn {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-radius: 9px;
+    padding: 10px 13px;
+    font-size: 13px;
+    color: #78350F;
+    margin-top: 10px;
+  }
+
+  /* ── ACTION PILLS ── */
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 10px;
+  }
+  .action-pill {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 11px;
+    border-radius: 20px;
+    border: 1.5px solid;
+    white-space: nowrap;
+  }
+
+  /* ── SCHEDULE BOX ── */
+  .schedule {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .schedule-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text2);
+    letter-spacing: .04em;
+    background: #F8FAFC;
+  }
+  .schedule-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 14px 20px;
+    border-bottom: 1px solid #F1F5F9;
+  }
+  .schedule-row:last-child { border-bottom: none; }
+  .schedule-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text3);
+    min-width: 80px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+  .schedule-task {
+    font-size: 14px;
+    color: var(--text1);
+    flex: 1;
+  }
+  .schedule-task strong {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .schedule-tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── INFO GRID ── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .info-card-icon {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  .info-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text1);
+    margin-bottom: 5px;
+  }
+  .info-card-desc {
+    font-size: 12.5px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    margin: 56px 0 52px;
+    border: none;
+    border-top: 2px solid var(--border);
+    position: relative;
+  }
+  .section-divider::after {
+    content: attr(data-label);
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg);
+    padding: 0 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--text3);
+  }
+
+  /* ── QUICK REF TABLE ── */
+  .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 32px;
+    font-size: 13.5px;
+  }
+  .ref-table th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    background: #F8FAFC;
+    border-bottom: 2px solid var(--border);
+  }
+  .ref-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #F1F5F9;
+    vertical-align: top;
+    color: var(--text2);
+  }
+  .ref-table td:first-child { font-weight: 600; color: var(--text1); }
+  .ref-table tr:last-child td { border-bottom: none; }
+  .ref-table tr:hover td { background: #FAFCFF; }
+
+  /* ── COLOR CODES ── */
+  .hotel { --c: var(--hotel-color); --cbg: var(--hotel-light); }
+  .rest  { --c: var(--rest-color);  --cbg: var(--rest-light);  }
+  .shared { --c: var(--shared-color); --cbg: var(--shared-light); }
+
+  .part-label.hotel  { background: var(--hotel-light); color: var(--hotel-color); }
+  .part-label.rest   { background: var(--rest-light);  color: var(--rest-color);  }
+  .part-label.shared { background: var(--shared-light); color: var(--shared-color); }
+
+  .step-num.hotel  { background: var(--hotel-light); color: var(--hotel-color); border-color: var(--hotel-color); }
+  .step-num.rest   { background: var(--rest-light);  color: var(--rest-color);  border-color: var(--rest-color);  }
+  .step-num.shared { background: var(--shared-light); color: var(--shared-color); border-color: var(--shared-color); }
+
+  .action-pill.hotel  { background: var(--hotel-light); color: var(--hotel-color); border-color: #BAE6FD; }
+  .action-pill.rest   { background: var(--rest-light);  color: var(--rest-color);  border-color: #FED7AA; }
+  .action-pill.green  { background: rgba(16,185,129,0.1); color: #065F46; border-color: rgba(16,185,129,0.3); }
+  .action-pill.amber  { background: #FFFBEB; color: #78350F; border-color: #FDE68A; }
+
+  .schedule-tag.hotel  { background: var(--hotel-light); color: var(--hotel-color); }
+  .schedule-tag.rest   { background: var(--rest-light);  color: var(--rest-color);  }
+  .schedule-tag.green  { background: rgba(16,185,129,0.1); color: #065F46; }
+  .schedule-tag.shared { background: var(--shared-light); color: var(--shared-color); }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 32px 40px;
+    font-size: 13px;
+  }
+  .footer strong { color: rgba(255,255,255,0.85); }
+
+  @media print {
+    .cover { page-break-after: always; }
+    .section-divider { page-break-before: always; }
+    .toc { page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ══ -->
+<div class="cover">
+  <div class="cover-badge">
+    <span style="width:6px;height:6px;border-radius:50%;background:#6EE7B7;display:inline-block"></span>
+    Admin Manual · Version 1.0
+  </div>
+  <div class="cover-title">How to Run Your Business<br>with <span>Outskirts</span></div>
+  <div class="cover-sub">A plain-language, step-by-step guide for hotel owners and restaurant owners — no tech knowledge needed.</div>
+  <div class="cover-tags">
+    <div class="cover-tag"><span class="dot" style="background:#BAE6FD"></span> Hotel Workflows</div>
+    <div class="cover-tag"><span class="dot" style="background:#FED7AA"></span> Restaurant Workflows</div>
+    <div class="cover-tag"><span class="dot" style="background:#6EE7B7"></span> Shared: Staff, Reports & Settings</div>
+  </div>
+</div>
+
+<!-- ══ TABLE OF CONTENTS ══ -->
+<div class="toc">
+  <div class="toc-label">Contents</div>
+  <div class="toc-grid">
+    <a href="#daily-rhythm" class="toc-item">
+      <span class="toc-num" style="background:#EFF6FF;color:#1E3A5F">01</span>
+      Your Daily Rhythm
+    </a>
+    <a href="#hotel-checkin" class="toc-item">
+      <span class="toc-num" style="background:#E0F2FE;color:#0C4A6E">02</span>
+      Hotel: Check-in a Guest
+    </a>
+    <a href="#hotel-checkout" class="toc-item">
+      <span class="toc-num" style="background:#E0F2FE;color:#0C4A6E">03</span>
+      Hotel: Check-out & Bill
+    </a>
+    <a href="#hotel-bookings" class="toc-item">
+      <span class="toc-num" style="background:#E0F2FE;color:#0C4A6E">04</span>
+      Hotel: Manage Bookings
+    </a>
+    <a href="#hotel-housekeeping" class="toc-item">
+      <span class="toc-num" style="background:#E0F2FE;color:#0C4A6E">05</span>
+      Hotel: Housekeeping
+    </a>
+    <a href="#rest-order" class="toc-item">
+      <span class="toc-num" style="background:#FFF7ED;color:#7C2D12">06</span>
+      Restaurant: Take an Order
+    </a>
+    <a href="#rest-bill" class="toc-item">
+      <span class="toc-num" style="background:#FFF7ED;color:#7C2D12">07</span>
+      Restaurant: Close a Bill
+    </a>
+    <a href="#rest-menu" class="toc-item">
+      <span class="toc-num" style="background:#FFF7ED;color:#7C2D12">08</span>
+      Restaurant: Menu & QR Code
+    </a>
+    <a href="#supplies" class="toc-item">
+      <span class="toc-num" style="background:#F0FDF4;color:#166534">09</span>
+      Stock & Supplies
+    </a>
+    <a href="#staff" class="toc-item">
+      <span class="toc-num" style="background:#F0FDF4;color:#166534">10</span>
+      Staff & Attendance
+    </a>
+    <a href="#payroll" class="toc-item">
+      <span class="toc-num" style="background:#F0FDF4;color:#166534">11</span>
+      Salary & Payroll
+    </a>
+    <a href="#reports" class="toc-item">
+      <span class="toc-num" style="background:#FFFBEB;color:#78350F">12</span>
+      Monthly Reports
+    </a>
+    <a href="#settings" class="toc-item">
+      <span class="toc-num" style="background:#F5F3FF;color:#4C1D95">13</span>
+      One-time Setup
+    </a>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ══ SECTION 01: DAILY RHYTHM ══ -->
+<section id="daily-rhythm">
+  <div class="part-label shared">🔁 Every Day</div>
+  <h2 class="section-title">Your Daily Rhythm</h2>
+  <p class="section-intro">Think of the Dashboard as your morning newspaper — open it first thing and you'll instantly know what needs your attention today. Then follow the schedule below to stay on top of both your hotel and restaurant in one smooth routine.</p>
+
+  <div class="schedule">
+    <div class="schedule-header">Recommended Daily Schedule for the Admin / Owner</div>
+    <div class="schedule-row">
+      <div class="schedule-time">7:30 AM</div>
+      <div class="schedule-task"><strong>Open the app → Dashboard</strong>Check today's room occupancy, bookings arriving today, and any low-stock alerts.</div>
+      <div class="schedule-tag shared">Both</div>
+    </div>
+    <div class="schedule-row">
+      <div class="schedule-time">8:00 AM</div>
+      <div class="schedule-task"><strong>Mark staff attendance</strong>Go to Staff → Today's Attendance and mark each person Present or Absent.</div>
+      <div class="schedule-tag shared">Both</div>
+    </div>
+    <div class="schedule-row">
+      <div class="schedule-time">9:00 AM</div>
+      <div class="schedule-task"><strong>Assign housekeeping tasks</strong>Go to Housekeeping and assign today's room cleaning to your housekeeping staff.</div>
+      <div class="schedule-tag hotel" style="background:#E0F2FE;color:#0C4A6E">Hotel</div>
+    </div>
+    <div class="schedule-row">
+      <div class="schedule-time">10:00 AM</div>
+      <div class="schedule-task"><strong>Check-in arriving guests</strong>Go to Rooms → Book View. Guests arriving today show in the Bookings timeline.</div>
+      <div class="schedule-tag hotel" style="background:#E0F2FE;color:#0C4A6E">Hotel</div>
+    </div>
+    <div class="schedule-row">
+      <div class="schedule-time">Lunch–Night</div>
+      <div class="schedule-task"><strong>Handle restaurant orders (KOT)</strong>As orders come in, add them in KOT. Monitor the kitchen board. Generate bills at table close.</div>
+      <div class="schedule-tag rest" style="background:#FFF7ED;color:#7C2D12">Restaurant</div>
+    </div>
+    <div class="schedule-row">
+      <div class="schedule-time">11:00 PM</div>
+      <div class="schedule-task"><strong>Daily closing: wastage log + supplies</strong>Go to Supplies → fill in how much was used, leftover, and any wastage. Save closing.</div>
+      <div class="schedule-tag rest" style="background:#FFF7ED;color:#7C2D12">Restaurant</div>
+    </div>
+    <div class="schedule-row">
+      <div class="schedule-time">End of Day</div>
+      <div class="schedule-task"><strong>Review Billing summary</strong>Go to Billing → today's filter. Confirm all bills are closed. Note the day's revenue.</div>
+      <div class="schedule-tag shared">Both</div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-card-icon">📊</div>
+      <div class="info-card-title">Dashboard</div>
+      <div class="info-card-desc">Shows live KPIs — total rooms occupied, today's check-ins/outs, restaurant orders, and revenue at a glance.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🔔</div>
+      <div class="info-card-title">Alerts to watch</div>
+      <div class="info-card-desc">Red "Critical" supplies, pending housekeeping tasks, and salary payments due are the three things that need daily attention.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🧭</div>
+      <div class="info-card-title">Navigation</div>
+      <div class="info-card-desc">All sections live in the left sidebar. Click any item to switch. Your current page is highlighted in green.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider" data-label="Hotel Workflows">
+
+<!-- ══ SECTION 02: HOTEL CHECK-IN ══ -->
+<section id="hotel-checkin">
+  <div class="part-label hotel">🏨 Hotel</div>
+  <h2 class="section-title">Check-in a Guest</h2>
+  <p class="section-intro">When a guest arrives at the front desk, this is the full process — from finding an available room to confirming their stay in the system. Takes about 2 minutes once you know it.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num hotel">01</div></div>
+      <div class="step-body">
+        <div class="step-title">Go to Rooms in the sidebar</div>
+        <div class="step-desc">Click <strong>Rooms</strong> in the left menu. You'll see the <em>Book View</em> — a grid of all your rooms colour-coded by status.</div>
+        <div class="actions">
+          <span class="action-pill hotel">Green border = Available</span>
+          <span class="action-pill amber">Yellow = Reserved</span>
+          <span class="action-pill" style="background:#F1F0FF;color:#4C1D95;border-color:#C4B5FD">Dark = Occupied</span>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num hotel">02</div></div>
+      <div class="step-body">
+        <div class="step-title">Pick an available room</div>
+        <div class="step-desc">Click any room tile with a green border. A panel slides open on the right showing the room details — type, capacity, and rate per night.</div>
+        <div class="tip"><span class="tip-icon">💡</span>Use the filter bar at the top to show only Standard, Deluxe, or Suite rooms. You can also filter by number of guests.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num hotel">03</div></div>
+      <div class="step-body">
+        <div class="step-title">Fill in guest details</div>
+        <div class="step-desc">In the right panel, fill in: Guest Full Name, Phone Number, ID Type (Aadhaar/PAN/Passport) and ID Number, Number of Guests, Booking Source (Direct / MMT / Goibibo / Walk-in).</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num hotel">04</div></div>
+      <div class="step-body">
+        <div class="step-title">Set check-in and check-out dates</div>
+        <div class="step-desc">Pick the dates using the calendar pickers. The bill preview at the bottom will automatically calculate the total (rate × nights + 12% GST).</div>
+        <div class="tip"><span class="tip-icon">💡</span>The bill summary updates live — you can see the exact amount before confirming.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num hotel">05</div></div>
+      <div class="step-body">
+        <div class="step-title">Choose payment mode and confirm</div>
+        <div class="step-desc">Select how the guest will pay — Cash, UPI, Card, or Net Banking. Then click <strong>Confirm Check-In</strong>. The room turns dark (occupied) immediately.</div>
+        <div class="tip"><span class="tip-icon">✅</span>You'll see a green toast message at the top saying "[Guest name] checked into Room [number]!"</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn"><span style="font-size:14px;flex-shrink:0">⚠️</span>If a guest doesn't have their ID handy, you can still check them in but make sure you update the ID details before they leave. It's a legal requirement.</div>
+</section>
+
+<hr class="section-divider" data-label="&nbsp;">
+
+<!-- ══ SECTION 03: CHECKOUT & BILL ══ -->
+<section id="hotel-checkout">
+  <div class="part-label hotel">🏨 Hotel</div>
+  <h2 class="section-title">Check-out a Guest &amp; Generate Bill</h2>
+  <p class="section-intro">When a guest is ready to leave, generate their final bill, collect payment, and free up the room — all in under a minute.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num hotel">01</div></div>
+      <div class="step-body">
+        <div class="step-title">Find the guest's room</div>
+        <div class="step-desc">Go to <strong>Rooms</strong>. Dark-coloured rooms are occupied. Click the room the guest is leaving.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num hotel">02</div></div>
+      <div class="step-body">
+        <div class="step-title">Review the bill summary</div>
+        <div class="step-desc">The right panel shows the complete stay summary — guest name, check-in/out dates, number of nights, subtotal, and GST. Check it's all correct.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num hotel">03</div></div>
+      <div class="step-body">
+        <div class="step-title">Click "Bill & Checkout"</div>
+        <div class="step-desc">Click the green <strong>Bill & Checkout</strong> button. A detailed bill popup appears. Here you can adjust the GST percentage and apply any discount if needed.</div>
+        <div class="actions">
+          <span class="action-pill hotel">Set GST %</span>
+          <span class="action-pill hotel">Add discount %</span>
+          <span class="action-pill hotel">Choose payment method</span>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num hotel">04</div></div>
+      <div class="step-body">
+        <div class="step-title">Confirm checkout</div>
+        <div class="step-desc">Click <strong>Checkout & Close Room</strong>. The room status immediately goes back to Available (green border) and is ready for the next guest.</div>
+        <div class="tip"><span class="tip-icon">💡</span>For quick checkout without the full bill (e.g. if payment was done in advance), use <strong>Quick Out</strong> instead.</div>
+      </div>
+    </div>
+  </div>
+
+  <table class="ref-table">
+    <thead><tr><th>Situation</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td>Guest wants to extend stay</td><td>Go to the occupied room → update the check-out date → the bill recalculates automatically</td></tr>
+      <tr><td>Guest wants an early checkout</td><td>Use Bill & Checkout → adjust dates manually → bill recalculates for actual nights stayed</td></tr>
+      <tr><td>Room needs repairs after checkout</td><td>Go to Housekeeping → Assign Task → select that room → mark as "Post-checkout clean" or "Maintenance inspection"</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<hr class="section-divider" data-label="&nbsp;">
+
+<!-- ══ SECTION 04: BOOKINGS ══ -->
+<section id="hotel-bookings">
+  <div class="part-label hotel">🏨 Hotel</div>
+  <h2 class="section-title">Manage Room Bookings</h2>
+  <p class="section-intro">The Bookings section is your advance reservation register. Use it for guests who've reserved in advance but haven't arrived yet — via phone, OTA platforms like MakeMyTrip, or walk-ins.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num hotel">01</div></div>
+      <div class="step-body">
+        <div class="step-title">Create a new booking</div>
+        <div class="step-desc">Go to <strong>Bookings</strong> → click <strong>+ New Booking</strong>. Fill in: Guest name, phone, room number, booking source, check-in date, check-out date.</div>
+        <div class="tip"><span class="tip-icon">💡</span>The booking status starts as "Confirmed" (yellow). It only becomes "Checked-in" (dark) when the guest actually arrives.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num hotel">02</div></div>
+      <div class="step-body">
+        <div class="step-title">Use the Occupancy Timeline to see the bigger picture</div>
+        <div class="step-desc">At the top of Bookings, there's a visual calendar — the <strong>Occupancy Timeline</strong>. It shows every room and when it's occupied, confirmed, or free. You can zoom in or out by picking a date range with the two calendar pickers.</div>
+        <div class="tip"><span class="tip-icon">💡</span>Use the filter buttons (All Rooms / Standard / Deluxe / Suite) to focus on just one room type. Scroll the timeline left-right — room numbers stay pinned on the left.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num hotel">03</div></div>
+      <div class="step-body">
+        <div class="step-title">When a booked guest arrives — confirm their arrival</div>
+        <div class="step-desc">Find their booking in the list → click <strong>View</strong> → click <strong>Check-in Now</strong>. The booking status changes from Confirmed to Checked-in and the room becomes occupied.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-card-icon">🟦</div>
+      <div class="info-card-title">Dark blue block = Checked-in</div>
+      <div class="info-card-desc">Guest is currently staying in the room right now.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🟨</div>
+      <div class="info-card-title">Yellow block = Confirmed</div>
+      <div class="info-card-desc">Advance booking — guest is expected but hasn't arrived yet.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🟪</div>
+      <div class="info-card-title">Purple block = Reserved</div>
+      <div class="info-card-desc">Room is held (e.g. partial payment made), not yet confirmed.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🔲</div>
+      <div class="info-card-title">Dashed border = Available</div>
+      <div class="info-card-desc">Room is free and can be booked for those dates.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider" data-label="&nbsp;">
+
+<!-- ══ SECTION 05: HOUSEKEEPING ══ -->
+<section id="hotel-housekeeping">
+  <div class="part-label hotel">🏨 Hotel</div>
+  <h2 class="section-title">Housekeeping</h2>
+  <p class="section-intro">Assign cleaning and preparation tasks to your housekeeping staff, track their progress, and make sure every room is ready for the next guest.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num hotel">01</div></div>
+      <div class="step-body">
+        <div class="step-title">Assign a task each morning</div>
+        <div class="step-desc">Go to <strong>Housekeeping</strong> → click <strong>Assign Task</strong>. Select the room, the staff member, the type of task, scheduled time, and priority.</div>
+        <div class="actions">
+          <span class="action-pill hotel">Full clean + restock</span>
+          <span class="action-pill hotel">Turn-down service</span>
+          <span class="action-pill hotel">Pre-arrival prep</span>
+          <span class="action-pill hotel">Post-checkout clean</span>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num hotel">02</div></div>
+      <div class="step-body">
+        <div class="step-title">Track progress on the board</div>
+        <div class="step-desc">Tasks appear on a Kanban board with three columns: <strong>Pending</strong>, <strong>In Progress</strong>, and <strong>Done</strong>. You can see at a glance which rooms are ready and which are still being cleaned.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num hotel">03</div></div>
+      <div class="step-body">
+        <div class="step-title">Check the checklist before marking done</div>
+        <div class="step-desc">Click any task card → click <strong>Checklist</strong>. Walk through each item (vacuum, towels, toiletries, etc.) and tick them off. The progress bar shows completion percentage.</div>
+        <div class="tip"><span class="tip-icon">💡</span>If a staff member finishes a task, they can click <strong>Mark Complete</strong>. You'll see it move to the Done column instantly.</div>
+      </div>
+    </div>
+  </div>
+
+  <table class="ref-table">
+    <thead><tr><th>Priority Level</th><th>When to use it</th></tr></thead>
+    <tbody>
+      <tr><td>🔴 Urgent</td><td>Guest arriving in less than 1 hour and room isn't ready</td></tr>
+      <tr><td>🟠 High</td><td>Guest checking out today — room needs to be turned around quickly</td></tr>
+      <tr><td>⚪ Normal</td><td>Regular daily cleaning for occupied or vacant rooms</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<hr class="section-divider" data-label="Restaurant Workflows">
+
+<!-- ══ SECTION 06: TAKE AN ORDER ══ -->
+<section id="rest-order">
+  <div class="part-label rest">🍽 Restaurant</div>
+  <h2 class="section-title">Taking & Managing Orders (KOT)</h2>
+  <p class="section-intro">KOT stands for Kitchen Order Ticket — this is the digital version of the paper slip your kitchen receives. Every order your restaurant takes goes through here, whether it's dine-in, parcel, or room service.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num rest">01</div></div>
+      <div class="step-body">
+        <div class="step-title">Go to KOT in the sidebar</div>
+        <div class="step-desc">Click <strong>KOT / Orders</strong>. You'll see a table map on the left (all your restaurant tables) and live orders on the right.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num rest">02</div></div>
+      <div class="step-body">
+        <div class="step-title">Choose the order type</div>
+        <div class="step-desc">Use the tabs at the top to select the type of order you're entering:</div>
+        <div class="actions">
+          <span class="action-pill rest">Dine-in — customer at a table</span>
+          <span class="action-pill amber">Parcel — takeaway / delivery</span>
+          <span class="action-pill" style="background:#E0F2FE;color:#0C4A6E;border-color:#BAE6FD">Room Service — hotel room guest</span>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num rest">03</div></div>
+      <div class="step-body">
+        <div class="step-title">Click a table and add the order</div>
+        <div class="step-desc">For dine-in: click the table on the map → an order panel opens. Type in the items (e.g. "Paneer Tikka ×2, Dal Makhani ×1"), the number of guests, and amount. Click <strong>Place Order</strong>.</div>
+        <div class="tip"><span class="tip-icon">💡</span>For parcel orders, click <strong>+ New Parcel</strong>. For room service, click <strong>+ Room Order</strong> and select the room number.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num rest">04</div></div>
+      <div class="step-body">
+        <div class="step-title">Track order status</div>
+        <div class="step-desc">Each order shows its current status. Move it forward as the kitchen progresses:</div>
+        <div class="actions">
+          <span class="action-pill amber">Pending → kitchen hasn't started</span>
+          <span class="action-pill" style="background:#FFF7ED;color:#C2410C;border-color:#FED7AA">Preparing → kitchen is cooking</span>
+          <span class="action-pill green">Ready → food is up</span>
+          <span class="action-pill" style="background:#F0FDF4;color:#166534;border-color:#BBF7D0">Served → delivered to table</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider" data-label="&nbsp;">
+
+<!-- ══ SECTION 07: CLOSE A BILL ══ -->
+<section id="rest-bill">
+  <div class="part-label rest">🍽 Restaurant</div>
+  <h2 class="section-title">Closing a Table &amp; Generating a Bill</h2>
+  <p class="section-intro">When customers are done eating and ask for their bill, here's the exact flow from order total to payment collected.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num rest">01</div></div>
+      <div class="step-body">
+        <div class="step-title">Find the table's order in KOT</div>
+        <div class="step-desc">Click the table from the map or find the order card in the live orders list on the right side of the KOT screen.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num rest">02</div></div>
+      <div class="step-body">
+        <div class="step-title">Open the Bill</div>
+        <div class="step-desc">Click the order → click <strong>Generate Bill</strong>. A popup appears showing: all items ordered, subtotal, GST (18%), any discount, and the grand total.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num rest">03</div></div>
+      <div class="step-body">
+        <div class="step-title">Adjust GST and discount if needed</div>
+        <div class="step-desc">Change the GST percentage (0%, 5%, 12%, 18%) or type in a discount percentage. The total updates instantly — no calculator needed.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num rest">04</div></div>
+      <div class="step-body">
+        <div class="step-title">Enter customer phone and collect payment</div>
+        <div class="step-desc">Type the customer's phone number. Select how they're paying — Cash, UPI, Card, or Net Banking. Click <strong>Confirm & Send</strong>.</div>
+        <div class="tip"><span class="tip-icon">✅</span>The table is freed up immediately and the bill is recorded in the Billing section for your end-of-day summary.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn"><span style="font-size:14px;flex-shrink:0">⚠️</span>Make sure to mark every bill as paid before end of day — unbilled orders will show up as red in the Billing section and won't appear in your revenue reports.</div>
+</section>
+
+<hr class="section-divider" data-label="&nbsp;">
+
+<!-- ══ SECTION 08: MENU & QR ══ -->
+<section id="rest-menu">
+  <div class="part-label rest">🍽 Restaurant</div>
+  <h2 class="section-title">Menu Management &amp; QR Code</h2>
+  <p class="section-intro">Keep your menu up to date in real time. You can add new dishes, update prices, mark items as unavailable (when you run out), and generate QR codes for each table so customers can view the menu on their phones.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num rest">01</div></div>
+      <div class="step-body">
+        <div class="step-title">Add a new dish</div>
+        <div class="step-desc">Go to <strong>Menu</strong> → click <strong>+ Add Item</strong>. Enter the dish name, category (Veg / Non-Veg / Beverages / Snacks / Dessert), and price. Click Add.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num rest">02</div></div>
+      <div class="step-body">
+        <div class="step-title">Mark a dish as unavailable</div>
+        <div class="step-desc">Find the dish in the menu list → click the green toggle switch next to it. It turns grey — the dish will be hidden from the QR menu customers see.</div>
+        <div class="tip"><span class="tip-icon">💡</span>Turn it back on when stock is replenished. You don't need to delete and re-add the dish.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num rest">03</div></div>
+      <div class="step-body">
+        <div class="step-title">Generate a QR code for a table</div>
+        <div class="step-desc">On the right side of the Menu page, you'll see the <strong>QR Menu Control</strong> panel. Select a table number from the dropdown → the QR code updates. Click <strong>Download Now</strong> and print it for that table.</div>
+        <div class="tip"><span class="tip-icon">💡</span>Customers scan the QR code with their phone camera to see your live menu — no separate app needed.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider" data-label="Shared: Supplies, Staff & Reports">
+
+<!-- ══ SECTION 09: SUPPLIES ══ -->
+<section id="supplies">
+  <div class="part-label shared">📦 Shared</div>
+  <h2 class="section-title">Stock &amp; Supplies</h2>
+  <p class="section-intro">Track every ingredient and supply item in one place. The app warns you before you run out so you're never caught short during service.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num shared">01</div></div>
+      <div class="step-body">
+        <div class="step-title">Check your stock status daily</div>
+        <div class="step-desc">Go to <strong>Supplies</strong>. The four KPI cards at the top show: Total Items, Critical (must reorder now), Low (reorder soon), and OK. The bar chart next to each item shows current stock level visually.</div>
+        <div class="actions">
+          <span class="action-pill" style="background:#FEF2F2;color:#DC2626;border-color:#FECACA">🔴 Critical — reorder today</span>
+          <span class="action-pill amber">🟡 Low — reorder this week</span>
+          <span class="action-pill green">🟢 Good — sufficient stock</span>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num shared">02</div></div>
+      <div class="step-body">
+        <div class="step-title">Restock an item</div>
+        <div class="step-desc">Click <strong>Restock</strong> next to any item. Type in how much quantity you're adding. Click Save. The stock level updates and the status colour changes automatically.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num shared">03</div></div>
+      <div class="step-body">
+        <div class="step-title">Daily Closing — fill in wastage at end of day</div>
+        <div class="step-desc">Scroll down to <strong>Daily Closing — Wastage Log</strong>. For each item, fill in: how much was used today, how much is leftover, and how much was wasted (with a reason — expired, spoiled, etc.). Click <strong>Save Daily Closing</strong>.</div>
+        <div class="tip"><span class="tip-icon">💡</span>Tracking wastage daily helps you understand patterns — are you over-preparing on certain days? This directly saves you money.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider" data-label="&nbsp;">
+
+<!-- ══ SECTION 10: STAFF & ATTENDANCE ══ -->
+<section id="staff">
+  <div class="part-label shared">👥 Shared</div>
+  <h2 class="section-title">Staff &amp; Daily Attendance</h2>
+  <p class="section-intro">All your employees — hotel and restaurant — are managed in one place. Mark attendance every morning; this feeds directly into the monthly payroll calculation.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num shared">01</div></div>
+      <div class="step-body">
+        <div class="step-title">Mark today's attendance (do this every morning)</div>
+        <div class="step-desc">Go to <strong>Staff</strong> → click the <strong>Today's Attendance</strong> tab. You'll see every staff member with two buttons — <strong>✓ Present</strong> and <strong>✗ Absent</strong>. Click the appropriate one for each person.</div>
+        <div class="warn"><span style="font-size:14px;flex-shrink:0">⚠️</span>Attendance must be marked on the same day — you cannot backdate it. Missing a day means it shows as unmarked in the monthly report.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num shared">02</div></div>
+      <div class="step-body">
+        <div class="step-title">Add a new staff member</div>
+        <div class="step-desc">Click <strong>+ Add Staff</strong>. Fill in: Name, Role, Department (Hotel / Restaurant), Phone, Base Salary, and Date of Joining. Click Save.</div>
+        <div class="tip"><span class="tip-icon">💡</span>Department matters — it affects which section they appear in for task assignments (e.g., housekeeping staff appears in the Housekeeping module).</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num shared">03</div></div>
+      <div class="step-body">
+        <div class="step-title">View attendance history</div>
+        <div class="step-desc">Go to the <strong>Attendance Log</strong> tab. Set the date range using the From and To pickers. A grid shows each staff member with P (Present) and A (Absent) for every working day, plus their attendance percentage and total absences as donut charts.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider" data-label="&nbsp;">
+
+<!-- ══ SECTION 11: PAYROLL ══ -->
+<section id="payroll">
+  <div class="part-label shared">💰 Shared</div>
+  <h2 class="section-title">Monthly Salary &amp; Payroll</h2>
+  <p class="section-intro">At the end of each month, pay your staff through the system so you have a complete record of every payment — including advances and deductions.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num shared">01</div></div>
+      <div class="step-body">
+        <div class="step-title">Record any advance given during the month</div>
+        <div class="step-desc">If you gave cash advance to a staff member, go to Staff → click their name card → click <strong>Record Advance</strong>. Enter the amount and reason. This gets deducted automatically from their month-end salary.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num shared">02</div></div>
+      <div class="step-body">
+        <div class="step-title">At month end — pay each person</div>
+        <div class="step-desc">Go to Staff → <strong>Payroll</strong> tab. You'll see a table with every employee, their base salary, advance taken, and the net amount payable. After paying in cash/transfer, click <strong>Mark Paid</strong> against their name.</div>
+        <div class="tip"><span class="tip-icon">✅</span>The status changes from "Pending" to "Paid". This is logged in their Salary History permanently.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num shared">03</div></div>
+      <div class="step-body">
+        <div class="step-title">Generate salary slips (optional)</div>
+        <div class="step-desc">Click <strong>Generate Slips</strong> at the top of the Payroll tab to print formal salary slips for all staff. Useful for employees who need it for bank or rental purposes.</div>
+      </div>
+    </div>
+  </div>
+
+  <table class="ref-table">
+    <thead><tr><th>Action</th><th>Where to do it</th><th>When</th></tr></thead>
+    <tbody>
+      <tr><td>Update base salary</td><td>Staff → click staff card → Edit Salary</td><td>When giving a raise</td></tr>
+      <tr><td>Give advance</td><td>Staff → click staff card → Record Advance</td><td>During the month, anytime</td></tr>
+      <tr><td>Clear advance</td><td>Same popup → Clear Advance button</td><td>After full deduction</td></tr>
+      <tr><td>View all past payments</td><td>Staff → click staff card → Salary History</td><td>Anytime for records</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<hr class="section-divider" data-label="&nbsp;">
+
+<!-- ══ SECTION 12: MONTHLY REPORTS ══ -->
+<section id="reports">
+  <div class="part-label shared">📈 Shared</div>
+  <h2 class="section-title">Monthly Reports &amp; Financial Review</h2>
+  <p class="section-intro">At the end of each month, spend 20 minutes reviewing these three sections. They give you a complete picture of where your money came from, where it went, and how you can do better next month.</p>
+
+  <div class="schedule">
+    <div class="schedule-header">Month-End Review Checklist (takes ~20 minutes)</div>
+    <div class="schedule-row">
+      <div class="schedule-time">Step 1</div>
+      <div class="schedule-task"><strong>Billing Summary</strong>Go to Billing. Use the date range filter to set the full month. Review total revenue for Dine-in, Parcel, and Room Service separately.</div>
+      <div class="schedule-tag rest" style="background:#FFF7ED;color:#7C2D12">Restaurant</div>
+    </div>
+    <div class="schedule-row">
+      <div class="schedule-time">Step 2</div>
+      <div class="schedule-task"><strong>Room Revenue</strong>Go to Rooms → Floor Plan → Room Directory. Note how many rooms were occupied and for how many nights. Cross-check with booking total amounts.</div>
+      <div class="schedule-tag hotel" style="background:#E0F2FE;color:#0C4A6E">Hotel</div>
+    </div>
+    <div class="schedule-row">
+      <div class="schedule-time">Step 3</div>
+      <div class="schedule-task"><strong>Expenses</strong>Go to Expenses. Review all outgoings for the month — purchases, repairs, utilities. Compare against last month.</div>
+      <div class="schedule-tag shared">Both</div>
+    </div>
+    <div class="schedule-row">
+      <div class="schedule-time">Step 4</div>
+      <div class="schedule-task"><strong>Electricity</strong>Go to Electricity. Enter the closing meter reading for the month to log your unit consumption and electricity bill for the period.</div>
+      <div class="schedule-tag shared">Both</div>
+    </div>
+    <div class="schedule-row">
+      <div class="schedule-time">Step 5</div>
+      <div class="schedule-task"><strong>Payroll</strong>Go to Staff → Payroll. Mark all salaries as paid. Print salary slips if needed.</div>
+      <div class="schedule-tag shared">Both</div>
+    </div>
+    <div class="schedule-row">
+      <div class="schedule-time">Step 6</div>
+      <div class="schedule-task"><strong>Top dishes &amp; room popularity</strong>In Menu, look at the "Sold Today" column sorted by highest number — those are your bestsellers. Stock up on their ingredients next month.</div>
+      <div class="schedule-tag rest" style="background:#FFF7ED;color:#7C2D12">Restaurant</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider" data-label="One-Time Setup">
+
+<!-- ══ SECTION 13: SETTINGS ══ -->
+<section id="settings">
+  <div class="part-label" style="background:#F5F3FF;color:#4C1D95;">⚙️ Settings</div>
+  <h2 class="section-title">One-Time Setup</h2>
+  <p class="section-intro">You only need to do these things once when you first start using the app. After that, the app runs with your real data.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-left"><div class="step-num" style="background:#F5F3FF;color:#4C1D95;border-color:#7C3AED;">01</div></div>
+      <div class="step-body">
+        <div class="step-title">Set your brand name and logo</div>
+        <div class="step-desc">Go to <strong>Settings → Brand Identity</strong>. Type your property name and tagline. Upload your logo (or paste a link to it). Click <strong>Save Changes</strong>. Your name and logo will appear in the sidebar.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num" style="background:#F5F3FF;color:#4C1D95;border-color:#7C3AED;">02</div></div>
+      <div class="step-body">
+        <div class="step-title">Add your rooms</div>
+        <div class="step-desc">Go to <strong>Settings → Room Management</strong> → click <strong>+ Add Room</strong>. For each room, enter: Room number, Type (Standard/Deluxe/Suite), Capacity (number of guests), and Rate per night.</div>
+        <div class="tip"><span class="tip-icon">💡</span>Add all your rooms in one sitting — 10 rooms takes about 5 minutes. After that, your Rooms page and Occupancy Timeline will show all of them.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num" style="background:#F5F3FF;color:#4C1D95;border-color:#7C3AED;">03</div></div>
+      <div class="step-body">
+        <div class="step-title">Add your restaurant tables</div>
+        <div class="step-desc">Go to <strong>Settings → Table Management</strong> → click <strong>+ Add Table</strong>. Enter table number, floor (Main Floor / Bar / Patio), type, and seating capacity.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num" style="background:#F5F3FF;color:#4C1D95;border-color:#7C3AED;">04</div></div>
+      <div class="step-body">
+        <div class="step-title">Choose your colour palette</div>
+        <div class="step-desc">Go to <strong>Settings → Color Palette</strong>. Pick one of the 5 preset themes or use the three colour pickers to choose your own brand colours for Background, Primary (sidebar/buttons), and Accent (call-to-action buttons). Changes apply live across the whole app.</div>
+        <div class="actions">
+          <span class="action-pill" style="background:#F5F3FF;color:#4C1D95;border-color:#C4B5FD">Midnight (default)</span>
+          <span class="action-pill" style="background:#F5F3FF;color:#4C1D95;border-color:#C4B5FD">Indigo</span>
+          <span class="action-pill" style="background:#FFF7ED;color:#7C2D12;border-color:#FED7AA">Espresso</span>
+          <span class="action-pill" style="background:#E0F2FE;color:#0C4A6E;border-color:#BAE6FD">Ocean</span>
+          <span class="action-pill" style="background:#FFF1F2;color:#4C0519;border-color:#FECDD3">Rose</span>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num" style="background:#F5F3FF;color:#4C1D95;border-color:#7C3AED;">05</div></div>
+      <div class="step-body">
+        <div class="step-title">Add your menu items</div>
+        <div class="step-desc">Go to <strong>Menu → + Add Item</strong>. Add every dish you serve with its category and price. You don't have to do them all at once — you can add and edit anytime.</div>
+        <div class="tip"><span class="tip-icon">💡</span>Add your top 10 most-ordered dishes first so you can start using the KOT section right away.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num" style="background:#F5F3FF;color:#4C1D95;border-color:#7C3AED;">06</div></div>
+      <div class="step-body">
+        <div class="step-title">Add all your staff</div>
+        <div class="step-desc">Go to <strong>Staff → + Add Staff</strong>. Add each employee with their name, role, department, phone, and salary. This needs to be done before you can mark attendance or run payroll.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /page -->
+
+<!-- ══ FOOTER ══ -->
+<div class="footer">
+  <strong>Outskirts — Hospitality Suite</strong> · Admin Workflow Manual v1.0 · For internal use only<br>
+  <span style="margin-top:6px;display:block">If something in the app doesn't match what's in this guide, the app version is always more up-to-date.</span>
+</div>
+
+</body>
+</html>
